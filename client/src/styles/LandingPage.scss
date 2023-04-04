@@ -1,32 +1,44 @@
 @import "main";
 
-.index{
+.LandingPage{
     width: 100%;
     height: 90vh;
+    background-color: $background;
 
     .content{
-        margin: 25vh auto;
-        width: 50%;
-        height: 20vh;
+        margin: 0 auto;
+        padding-top: 20vh;
+        width: auto;
+        height: auto;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
         align-items: center;
 
         h2{
             text-align: center;
             font-family: Plus Jakarta Sans;
-            font-size: calc(42px + 0.390625vw);
+            font-size: calc(52px + 0.390625vw);
+            padding-bottom: 1vh;
+            width: 50%;
+        }
+
+        p{
+            text-align: center;
+            font-family: Plus Jakarta Sans;
+            font-size: calc(20px + 0.390625vw);
+            padding-bottom: 2vh;
+            color: rgb(65, 65, 65);
+            width: 40%;
         }
 
         a{
             height: 55px;
             width: 240px;
-            background-color: $blue3;
-            color: $white;
+            background-color: $highlight1;
+            color: black;
             font-family: Plus Jakarta Sans;
             font-size: 18px;
-            font-weight: 500;
+            font-weight: 600;
             border-radius: 15px;
             border: none;
             position: relative;
@@ -35,6 +47,7 @@
             line-height: 55px;
             display: block;
             overflow: hidden;
+
 
             @media (max-width: 1200px){
                 height: 40px;
@@ -63,7 +76,7 @@
                 width: 0;
                 height: 100%;
                 border-radius: 10px;
-                background-color: $blue2;
+                background-color: $highlight2;
                 transition: 300ms;
             }
 

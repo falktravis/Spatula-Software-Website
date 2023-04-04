@@ -5,11 +5,12 @@ const NavBar = () => {
     return(
         <div className="NavBar">
             <a href="/"><h1>Spatula Software</h1></a>
-            <ul>
-                <li><a href="/Pricing">Pricing</a></li>
-                <li><a href="/">Hours</a></li>
-                <li><a href="/">Contact Us</a></li>
-            </ul>
+            <div className="navButtons">
+                <ul>
+                    <li><a href="/Pricing">Pricing</a></li>
+                    <li><a href="https://discord.com/api/oauth2/authorize?client_id=1078415542404251790&redirect_uri=http%3A%2F%2Flocalhost%3A3008%2FDashboard&response_type=code&scope=identify">Dashboard</a></li>
+                </ul>
+            </div>
         </div>
     );
 }

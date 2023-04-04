@@ -1,7 +1,7 @@
 @import "main";
 
 .NavBar{
-    background-color: $blue3;
+    background-color: $background;
     height: 10vh;
     display: flex;
     justify-content: space-between;
@@ -14,7 +14,7 @@
         h1{
             padding-left: 1vw;
             font-size: 3vw;
-            color: $white;
+            color: black;
             font-family: Plus Jakarta Sans;
             font-weight: 600;
     
@@ -31,7 +31,7 @@
     .navButtons{
         display: flex;
         align-items: center;
-        width: 45%;
+        width: 30%;
 
         @media (max-width: 1200px){
             width: 55%;
@@ -53,7 +53,7 @@
                 a{
                     padding: 1.5vh .4vw;
                     text-decoration: none;
-                    color: $white;
+                    color: black;
                     font-family: Montserrat;
                     font-weight: 550;
                     position: relative;
@@ -61,7 +61,7 @@
             
                     &::after{
                         content: '';
-                        background: $white;
+                        background: $highlight1;
                         display: block;
                         height: 0.15vw;
                         width: 100%;
