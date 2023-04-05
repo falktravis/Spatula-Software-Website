@@ -2,9 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-const PORT = process.env.PORT || 3301;
+const PORT = process.env.PORT || 3008;
 
 app.use(cors());
+
+app.get('/Dashboard', (req, res) => {
+    console.log("dash");
+    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'))
+})
 
 //serve the react site with backend
 app.use(express.static(path.resolve(__dirname, '../client/dist')));
