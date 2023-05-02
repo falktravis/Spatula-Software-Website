@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {createClient} from '@supabase/supabase-js';
 
 const supabase = createClient(
     process.env.SUPABASEURL,
     process.env.SUPABASEPUBLICANONKEY
 )
+
+const [isToggled, setIsToggled] = useState(false);
+const toggle = () => {
+    setIsToggled(!isToggled);
+
+}
 
 function App(){
     return (
@@ -19,8 +25,14 @@ function App(){
                 <button id='changePlan'>Change Plan</button>
             </div>
             <div className='Pricing'>
-                <button>Anual</button>
-                <div className='monthlyPricingCards'>
+                <div className='pricingModelToggle'>
+                    <label>
+                        <input type="checkbox" defaultChecked={isToggled} onClick={toggle} />
+                        <span />
+                        <strong>{label}</strong>
+                    </label>
+                </div>
+                <div className='pricingCards'>
                         <div className='basic'>
                             <p>25</p>
                         </div>
@@ -30,9 +42,8 @@ function App(){
                         <div className='premium'>
                             <p>50</p>
                         </div>
-                    </div>
                 </div>
-                <div className='anualPricingCards'>
+                <div className='pricingCards'>
                     <div className='basic'>
                         <p>25</p>
                     </div>
@@ -44,6 +55,7 @@ function App(){
                     </div>
                 </div>
             </div>
+        </div>
     );
 }
  export default App;

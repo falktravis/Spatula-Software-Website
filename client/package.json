@@ -34,6 +34,8 @@
     "@supabase/supabase-js": "^2.21.0",
     "dotenv": "^16.0.3",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-router": "^6.11.0",
+    "react-router-dom": "^6.11.0"
   }
 }
