@@ -6,13 +6,14 @@ const supabase = createClient(
     process.env.SUPABASEPUBLICANONKEY
 )
 
+//Yearly/Monthly toggle button
 const [isToggled, setIsToggled] = useState(false);
 const toggle = () => {
     setIsToggled(!isToggled);
-
 }
 
 function App(){
+
     return (
         <div className='App'>
             <h1>Spatula Software</h1>
@@ -33,17 +34,6 @@ function App(){
                     </label>
                 </div>
                 <div className='pricingCards'>
-                        <div className='basic'>
-                            <p>25</p>
-                        </div>
-                        <div className='standard'>
-                            <p>35</p>
-                        </div>
-                        <div className='premium'>
-                            <p>50</p>
-                        </div>
-                </div>
-                <div className='pricingCards'>
                     <div className='basic'>
                         <p>25</p>
                     </div>
@@ -58,4 +48,5 @@ function App(){
         </div>
     );
 }
- export default App;
+
+export default App;
