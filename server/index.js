@@ -20,7 +20,7 @@ let userDB;
         await mongoClient.connect();
         await mongoClient.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
-        userDB = mongoClient.db('Spatula-Software').collection('users');
+        userDB = mongoClient.db('Spatula-Software').collection('Users');
     } catch(error){
         await mongoClient.close();
         console.log("Mongo Connection " + error);
