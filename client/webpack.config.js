@@ -51,6 +51,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Webpack App',
+            favicon: 'src/imgs/Spatula.ico',
             filename: 'index.html',
             template: 'src/index.html'
         }),
