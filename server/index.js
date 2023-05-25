@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require('path');
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");import Stripe from 'stripe';
+const stripe = new Stripe(process.env.STRIPE_TEST_KEY);
 
 const PORT = process.env.PORT || 3301;
 
@@ -29,11 +30,34 @@ let userDB;
 
 //middleware (as if I know what that means)
 const app = express();
+app.use(express.static('public'));
 app.use(bodyParser.json())
 app.use(express.static(path.resolve(__dirname, '../client/dist')));
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
+});
+
+app.post('/create-checkout-session', async (req, res) => {
+  const { priceId } = req.body;
+  
+  try{
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price: priceId,
+          quantity: 1,
+        },
+      ],
+      mode: 'subscription',
+      success_url: `${YOUR_DOMAIN}?success=true`,
+      cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+    });
+
+    res.status(200).json({ sessionId: session.id });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 //handle webhooks
