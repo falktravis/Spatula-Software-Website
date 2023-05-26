@@ -1,7 +1,8 @@
 const express = require("express");
 const path = require('path');
-const bodyParser = require("body-parser");import Stripe from 'stripe';
-const stripe = new Stripe(process.env.STRIPE_TEST_KEY);
+const bodyParser = require("body-parser");
+var cors = require('cors')
+const stripe = require('stripe')(process.env.STRIPE_TEST_KEY);
 
 const PORT = process.env.PORT || 3301;
 
@@ -31,7 +32,8 @@ let userDB;
 //middleware (as if I know what that means)
 const app = express();
 app.use(express.static('public'));
-app.use(bodyParser.json())
+app.use(cors());
+app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, '../client/dist')));
 
 app.listen(PORT, () => {
@@ -39,8 +41,10 @@ app.listen(PORT, () => {
 });
 
 app.post('/create-checkout-session', async (req, res) => {
-  const { priceId } = req.body;
   
+  const { priceId } = req.body;
+  console.log(priceId);
+
   try{
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -50,9 +54,11 @@ app.post('/create-checkout-session', async (req, res) => {
         },
       ],
       mode: 'subscription',
-      success_url: `${YOUR_DOMAIN}?success=true`,
-      cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+      success_url: `http://localhost:3301/Dashboard`,
+      cancel_url: `http://localhost:3301/Dashboard`,
     });
+
+    console.log(session);
 
     res.status(200).json({ sessionId: session.id });
   } catch (error) {

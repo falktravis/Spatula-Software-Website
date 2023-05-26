@@ -6,15 +6,19 @@ export default function Dashboard() {
     console.log(userData);
 
     const handleCheckout = async (priceId) => {
-        const response = await fetch('/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            priceId: priceId, // Use the specific price ID from your product in the Stripe Dashboard
-          }),
+        await fetch('/create-checkout-session', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                priceId: priceId, // Use the specific price ID from your product in the Stripe Dashboard
+            }),
         });
     
         const { sessionId } = await response.json();
+        console.log(sessionId);
+
         // Redirect the user to the Checkout page using the session ID
         stripe.redirectToCheckout({ sessionId });
     };
@@ -38,9 +42,9 @@ export default function Dashboard() {
                         <p className='tier'>Subscription Tier: <span>Basic</span></p>
                     </div>
                 </div>
-                <form className="userButtons" method="POST" action="/create-customer-portal-session">
+                <form className="userButtons" method='POST' action='/create-checkout-session' >
                     <button type="submit">Manage Plan</button>
-                    <button onClick={() => handleCheckout('priceIdExample')}>Basic</button>
+                    <button onClick={() => handleCheckout('prod_Nx0C1Ky7IRO9oB')}>Basic</button>
                 </form>
             </div>
         </div>
