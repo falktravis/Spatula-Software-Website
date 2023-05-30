@@ -173,6 +173,10 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
         await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 20})
       }
     }else if(type === 'customer.subscription.deleted'){
+      //get the discord id of the user
+      const userObj = await userDB.findOne({StripeId: customerId});
+      const discrodId = userObj.discordId;
+
       //delete database user
       await userDB.deleteOne({StripeId: customerId});
 
@@ -185,6 +189,10 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
       //email the person a failure message
 
       
+      //get the discord id of the user
+      const userObj = await userDB.findOne({StripeId: customerId});
+      const discrodId = userObj.discordId;
+
       //delete database object
       await userDB.deleteOne({StripeId: customerId});
 
