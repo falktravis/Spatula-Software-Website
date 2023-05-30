@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
   // Your email service configuration (e.g., SMTP or API credentials)
 });
 
-const sendMail = async (customerId, subject) => {
+const sendMail = async (customerId, subject, content) => {
   //get customer email from stripe
   const customer = await stripe.customers.retrieve(customerId);
   const email = customer.email;
@@ -139,19 +139,15 @@ app.post('/create-checkout-session', async (req, res) => {
     console.error('Error:', error);
     res.status(500).send('An error occurred while creating the Checkout Session.');
   }
-
 });
 
 const endpointSecret = "whsec_01e75c99b560466824a03d596993f6fcade9fc1ed151b7f062b113aad1d6740d";
 
 //handle webhooks
-app.post('/stripe/webhook', express.raw({ type: 'application/json' }), (request, response) => {
-  const sig = request.headers['stripe-signature'];
-
-  let event;
-
+app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
   try {
-    event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
+    const sig = request.headers['stripe-signature'];
+    const event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
     //console.log(event.data.object);
 
     const type = event.type; // Type of event
@@ -168,21 +164,40 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), (request,
         
       }
     }else if(type === 'customer.subscription.updated'){
-      //find database user and update ConcurrentTasks
+      const priceId = event.data.object.items.data[0].price.id; //!This is a guess
+      if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){
+        await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 5})
+      }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){
+        await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 10})
+      }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){
+        await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 20})
+      }
     }else if(type === 'customer.subscription.deleted'){
-      //delete database user and message main script to delete user from map
+      //delete database user
+      await userDB.deleteOne({StripeId: customerId});
+
+      //message main script to delete user from map
+
     }else if(type === 'invoice.payment_succeeded'){
       //email the person a receipt
+
     }else if(type === 'invoice.payment_failed'){
-      //email the person a failure message, delete database object, message main script to delete user from map
+      //email the person a failure message
+
+      
+      //delete database object
+      await userDB.deleteOne({StripeId: customerId});
+
+      //message main script to delete user from map
     }
+
+    
+    // Return a 200 response to acknowledge receipt of the event
+    response.sendStatus(200);
   } catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }
-
-  // Return a 200 response to acknowledge receipt of the event
-  response.sendStatus(200);
 });
 
 //serve the page
