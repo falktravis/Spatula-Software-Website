@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom"
 import {createClient} from '@supabase/supabase-js';
 import checkIcon from './imgs/checkIcon.svg';
 import heroImg from './imgs/heroImg.png';
+import notification1 from './imgs/Notification1.png';
+import notification3 from './imgs/Notification3.png';
+import notification4 from './imgs/Notification4.png';
 import wavesImg1 from './imgs/waves1.svg';
 import wavesImg2 from './imgs/waves2.svg';
 import './styles/hero.scss';
@@ -72,14 +75,22 @@ export default function Hero() {
                 <img src={wavesImg1} alt="Wave Image" className='waves1' />
             </div>
             <div className="landingPageContent">
-                <div className="softwareBenefits">
-                    <p></p>
+                <div className="row1">
+                    <p>Use Discord commands to create tasks from anywhere that will run simultaneously and notify you about posts.</p>
+                    <div className="softwareBenefits">
+                        <img src={notification3} alt="Screenshot of notification" />
+                        <h4>Get notifications on your phone and computer, less than 5 minutes after they are listed.</h4>
+                    </div>
                 </div>
-                <div className="softwareSpecifics">
-                    <p></p>
-                </div>
-                <div className="softwareInstructions">
-                    <p></p>
+                <div className="row2">
+                    <div className="softwareMessaging">
+                        <div className="imgContainer">
+                            <img className="img1" src={notification1} alt="Screenshot of notification with message button" />
+                            <img src={notification4} alt="Screenshot of notification with message sent" />
+                        </div>
+                        <h4>Automatically message Facebook users about their post, or message with just a single click.</h4>
+                    </div>
+                    <p>Effectively automate the flipping process</p>
                 </div>
             </div>
             <img src={wavesImg2} alt="Wave Image" className='waves2' />
