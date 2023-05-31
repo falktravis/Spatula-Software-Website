@@ -54,6 +54,27 @@ let userDB;
     }
 })();
 
+//websocket for messaging with software
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 8080 });
+
+wss.on('connection', (ws) => {
+  console.log('Client connected');
+
+  // Handle incoming messages from the client
+  ws.on('message', (message) => {
+    console.log('Received message:', message);
+
+    // Process the message and send a response if needed
+    // ...
+  });
+
+  // Handle client disconnection
+  ws.on('close', () => {
+    console.log('Client disconnected');
+  });
+});
+
 const app = express();
 
 // Custom middleware to save the raw request body for webhooks
