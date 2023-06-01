@@ -7,30 +7,6 @@ const stripe = require('stripe')(process.env.STRIPE_TEST_KEY);
 
 const PORT = process.env.PORT || 3301;
 
-// Configure Nodemailer transporter
-const nodemailer = require('nodemailer');
-const transporter = nodemailer.createTransport({
-  // Your email service configuration (e.g., SMTP or API credentials)
-});
-
-const sendMail = async (customerId, subject, content) => {
-  //get customer email from stripe
-  const customer = await stripe.customers.retrieve(customerId);
-  const email = customer.email;
-
-  //compose email
-  const mailOptions = {
-    from: 'Your Sender Email',
-    to: email,
-    subject: subject,
-    html: '<p>Invoice payment was successful. Thank you!</p>'
-    // Use your HTML email template and populate it with relevant data
-  };
-
-  //send the email
-  await transporter.sendMail(mailOptions);
-}
-
 //Database connection
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://SpatulaSoftware:jpTANtS4n59oqlam@spatula-software.tyas5mn.mongodb.net/?retryWrites=true&w=majority";
@@ -53,27 +29,6 @@ let userDB;
         console.log("Mongo Connection " + error);
     }
 })();
-
-//websocket for messaging with software
-const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 8080 });
-
-wss.on('connection', (ws) => {
-  console.log('Client connected');
-
-  // Handle incoming messages from the client
-  ws.on('message', (message) => {
-    console.log('Received message:', message);
-
-    // Process the message and send a response if needed
-    // ...
-  });
-
-  // Handle client disconnection
-  ws.on('close', () => {
-    console.log('Client disconnected');
-  });
-});
 
 const app = express();
 
@@ -117,7 +72,6 @@ app.post('/create-checkout-session', async (req, res) => {
   try {
     const discordId = req.query.discordId;
     const priceId = req.query.priceId;
-    console.log(discordId + "   " + priceId);
 
     let session;
     if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){
@@ -137,6 +91,9 @@ app.post('/create-checkout-session', async (req, res) => {
           },
           trial_period_days: 3,
         },
+        metadata: {
+          discordUserId: discordId
+        },
         payment_method_collection: 'if_required',
         success_url: `http://localhost:3301/Dashboard?success=true`,
         cancel_url: `http://localhost:3301/Dashboard?canceled=true`,
@@ -150,6 +107,9 @@ app.post('/create-checkout-session', async (req, res) => {
           },
         ],
         mode: 'subscription',
+        metadata: {
+          discordUserId: discordId
+        },
         success_url: `http://localhost:3301/Dashboard?success=true`,
         cancel_url: `http://localhost:3301/Dashboard?canceled=true`,
       });
@@ -167,63 +127,69 @@ const endpointSecret = "whsec_01e75c99b560466824a03d596993f6fcade9fc1ed151b7f062
 //handle webhooks
 app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
   try {
+    //initiate the event
     const sig = request.headers['stripe-signature'];
     const event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
-    //console.log(event.data.object);
 
+    //get variables
     const type = event.type; // Type of event
     const customerId = event.data.object.customer; // ID of the customer
-    const paymentStatus = event.data.object.status; // Action/status related to the event
+    const status = event.data.object.status; // Action/status related to the event
+    const priceId = event.data.object.items.data[0].price.id; //priceId of the 
+
+    //get the discord id of the user
+    const discordId = request.body.data.object.metadata.discordUserId;
+
+    console.log(type);
 
     if(type === 'customer.subscription.created'){
-      console.log(event.data.object);
-      const trialStartDate = event.data.object.trial_start;
-
-      if(paymentStatus === 'paid' || (paymentStatus === 'unpaid' && trialStartDate)){
-
-      }else{
-        
-      }
-    }else if(type === 'customer.subscription.updated'){
-      const priceId = event.data.object.items.data[0].price.id; //!This is a guess
+      console.log('create sub');
       if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){
-        await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 5})
+        await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 5});
       }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){
-        await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 10})
+        await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 10});
       }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){
-        await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 20})
+        await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 20});
+      }
+      
+    }else if(type === 'customer.subscription.updated'){
+
+      //Check for trial end with no payment method
+      const customer = await stripe.customers.retrieve(customerId); //get customer from stripe
+      const defaultPaymentMethod = customer.invoice_settings.default_payment_method;
+      if (status === 'active' && defaultPaymentMethod === null) {
+        console.log('Trial period ended without payment information');
+
+      }else{//update the subscription tier
+        console.log("update sub tier");
+
+        //delete user from db
+        await userDB.deleteOne({StripeId: customerId});
+
+        //message main app to delete from the map, or not?
+
+
+        if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){
+          await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 5})
+        }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){
+          await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 10})
+        }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){
+          await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 20})
+        }
       }
     }else if(type === 'customer.subscription.deleted'){
-      //get the discord id of the user
-      const userObj = await userDB.findOne({StripeId: customerId});
-      const discordId = userObj.discordId;
-
+      console.log('delete sub');
       //delete database user
       await userDB.deleteOne({StripeId: customerId});
 
-      //message main script to delete user from map
+      //message main script to delete user from map, or not?
 
-    }else if(type === 'invoice.payment_succeeded'){
-      //email the person a receipt
-
-    }else if(type === 'invoice.payment_failed'){
-      //email the person a failure message
-
-      
-      //get the discord id of the user
-      const userObj = await userDB.findOne({StripeId: customerId});
-      const discordId = userObj.discordId;
-
-      //delete database object
-      await userDB.deleteOne({StripeId: customerId});
-
-      //message main script to delete user from map
     }
-
     
     // Return a 200 response to acknowledge receipt of the event
     response.sendStatus(200);
   } catch (err) {
+    console.log('error: ' + err);
     response.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }
