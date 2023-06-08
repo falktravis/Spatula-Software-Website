@@ -12,7 +12,7 @@ $highlight2: #ff79fd;
 
 .NavBar{
     width: 95%;
-    height: 8vh;
+    height: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,6 +26,16 @@ $highlight2: #ff79fd;
 
     h1{
         font-size: calc(42px + 0.390625vw);
+
+        @media (max-width: 700px){
+            font-size: calc(32px + 0.390625vw);
+        }
+        @media (max-width: 500px){
+            font-size: calc(22px + 0.390625vw);
+        }
+        @media (max-width: 400px){
+            font-size: calc(18px + 0.390625vw);
+        }
     }
 
     ul{
@@ -33,12 +43,29 @@ $highlight2: #ff79fd;
         justify-content: space-around;
         width: 30%;
 
+        @media (max-width: 800px){
+            width: 40%;
+        }
+        @media (max-width: 400px){
+            width: 45%;
+        }
+
         li{
             list-style-type: none;
             font-size: calc(14px + 0.390625vw);
             font-weight: 600;
             padding: 20px;
             position: relative;
+
+            @media (max-width: 700px){
+                font-size: calc(12px + 0.390625vw);
+            }
+            @media (max-width: 500px){
+                font-size: calc(10px + 0.390625vw);
+            }
+            @media (max-width: 400px){
+                font-size: calc(8px + 0.390625vw);
+            }
                         
             &::after{
                 content: '';

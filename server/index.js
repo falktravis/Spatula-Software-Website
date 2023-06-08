@@ -84,17 +84,11 @@ app.post('/create-checkout-session', async (req, res) => {
         ],
         mode: 'subscription',
         subscription_data: {
-          trial_settings: {
-            end_behavior: {
-              missing_payment_method: 'cancel',
-            },
-          },
           trial_period_days: 3,
+          metadata: {
+            discordId: discordId,
+          },
         },
-        metadata: {
-          discordUserId: discordId
-        },
-        payment_method_collection: 'if_required',
         success_url: `http://localhost:3301/Dashboard?success=true`,
         cancel_url: `http://localhost:3301/Dashboard?canceled=true`,
       });
@@ -106,10 +100,15 @@ app.post('/create-checkout-session', async (req, res) => {
             quantity: 1,
           },
         ],
-        mode: 'subscription',
         metadata: {
-          discordUserId: discordId
+          discordId: discordId,
         },
+        subscription_data: {
+          metadata: {
+            discordId: discordId,
+          },
+        },
+        mode: 'subscription',
         success_url: `http://localhost:3301/Dashboard?success=true`,
         cancel_url: `http://localhost:3301/Dashboard?canceled=true`,
       });
@@ -134,16 +133,14 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
     //get variables
     const type = event.type; // Type of event
     const customerId = event.data.object.customer; // ID of the customer
-    const status = event.data.object.status; // Action/status related to the event
     const priceId = event.data.object.items.data[0].price.id; //priceId of the 
-
-    //get the discord id of the user
-    const discordId = request.body.data.object.metadata.discordUserId;
 
     console.log(type);
 
     if(type === 'customer.subscription.created'){
       console.log('create sub');
+
+      const discordId = event.data.object.metadata.discordId;
       if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){
         await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 5});
       }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){
@@ -154,36 +151,22 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
       
     }else if(type === 'customer.subscription.updated'){
 
-      //Check for trial end with no payment method
-      const customer = await stripe.customers.retrieve(customerId); //get customer from stripe
-      const defaultPaymentMethod = customer.invoice_settings.default_payment_method;
-      if (status === 'active' && defaultPaymentMethod === null) {
-        console.log('Trial period ended without payment information');
+      console.log("update sub tier");
 
-      }else{//update the subscription tier
-        console.log("update sub tier");
+      //delete user from db
+      await userDB.deleteOne({StripeId: customerId});
 
-        //delete user from db
-        await userDB.deleteOne({StripeId: customerId});
-
-        //message main app to delete from the map, or not?
-
-
-        if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){
-          await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 5})
-        }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){
-          await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 10})
-        }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){
-          await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 20})
-        }
+      if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){
+        await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 5})
+      }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){
+        await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 10})
+      }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){
+        await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 20})
       }
     }else if(type === 'customer.subscription.deleted'){
       console.log('delete sub');
       //delete database user
       await userDB.deleteOne({StripeId: customerId});
-
-      //message main script to delete user from map, or not?
-
     }
     
     // Return a 200 response to acknowledge receipt of the event

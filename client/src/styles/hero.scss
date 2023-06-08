@@ -5,7 +5,7 @@
     
     .hero{
         width: 100%;
-        height: 92vh;
+        height: calc(100vh - 80px);
 
         .notifications{
             position: absolute;
@@ -26,9 +26,36 @@
             margin-left: 10%;
             padding-top: 11vh;
 
+            @media (max-width: 1200px){
+                width: 50%;
+                margin-left: 5%;
+            }
+            @media (max-width: 1000px){
+                width: 55%;
+            }
+            @media (max-width: 700px){
+                width: 65%;
+            }
+            @media (max-width: 600px){
+                width: 85%;
+            }
+
             h2{
                 font-size: 3.3vw;
                 font-family: Plus Jakarta Sans;
+
+                @media (max-width: 1200px){
+                    font-size: 3.8vw;
+                }
+                @media (max-width: 1000px){
+                    font-size: 4.2vw;
+                }
+                @media (max-width: 700px){
+                    font-size: 4.8vw;
+                }
+                @media (max-width: 600px){
+                    font-size: 6.4vw;
+                }
 
                 span{
                     color: $highlight1;
@@ -40,6 +67,20 @@
                 font-family: Plus Jakarta Sans;
                 width: 80%;
                 margin-top: 1vh;
+
+                @media (max-width: 1200px){
+                    width: 90%;
+                }
+                @media (max-width: 1000px){
+                    font-size: calc(18px + 0.390625vw);
+                }
+                @media (max-width: 700px){
+                    font-size: calc(15px + 0.390625vw);
+                }
+                @media (max-width: 400px){
+                    font-size: calc(13px + 0.390625vw);
+                    width: 100%;
+                }
             }
 
             a{
@@ -48,7 +89,7 @@
                 background-color: $highlight1;
                 color: black;
                 font-family: Plus Jakarta Sans;
-                font-size: calc(16px + 0.390625vw);
+                font-size: calc(20px + 0.390625vw);
                 font-weight: 600;
                 border-radius: 10px;
                 margin-left: 3vw;
@@ -61,18 +102,15 @@
                 display: block;
                 overflow: hidden;
 
-                @media (max-width: 1200px){
+                @media (max-width: 700px){
+                    margin-left: 1vw;
+                }
+                @media (max-width: 800px){
                     height: 40px;
-                    width: 180px;
+                    width: 170px;
                     font-size: calc(16px + 0.390625vw);
                     line-height: 40px;
                     margin-top: 3vh;
-                }
-                @media (max-width: 600px){
-                    height: 35px;
-                    width: 160px;
-                    line-height: 35px;
-                    font-size: calc(16px + 0.390625vw);
                 }
                 
                 span{
@@ -108,45 +146,91 @@
         width: 100%;
         position: relative; 
         background-color: $highlight1;
-        padding-bottom: 10vh;
+        overflow: visible;
 
-        & > div{
-            width: 80%;
-            margin: 0 10%;
-            position: relative;
+        h2{
+            font-size: calc(40px + 0.390625vw);
+            font-family: Plus Jakarta Sans;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+            padding: 2vh 0;
+
+            @media (max-width: 800px){
+                font-size: calc(30px + 0.390625vw);
+            }
+            @media (max-width: 500px){
+                font-size: calc(24px + 0.390625vw);
+            }
+        }
+
+        .contentButtons{
+            width: 50%;
+            margin: 0 auto;
+            padding: 3vh 0;
             display: flex;
             justify-content: space-between;
-            overflow: visible;
+            position: relative;
 
-            p{
-                margin-top: 25vh;
-                margin-right: 5%;
-                font-size: calc(26px + 0.390625vw);
+            @media (max-width: 1100px){
+                width: 70%;
+            }
+            @media (max-width: 800px){
+                width: 85%;
+            }
+            @media (max-width: 500px){
+                width: 90%;
+            }
+
+            button{
+                width: 25%;
+                height: 5vh;
+                border-radius: 30px;
+                border: none;
+                font-size: calc(14px + 0.390625vw);
                 font-family: Plus Jakarta Sans;
                 font-weight: 600;
-                color: white;
-                width: 35%;
+                background-color: transparent;
+                transition: 200ms;
 
-                &::after{
-                    content: '';
-                    display: block;
-                    height: 8px;
-                    width: 60%;
-                    margin-top: 2vh;
-                    background-color: $highlight2;
+                @media (max-width: 1300px){
+                    font-size: calc(12px + 0.390625vw);
+                }
+                @media (max-width: 500px){
+                    width: 30%;
+                }
+                @media (max-width: 400px){
+                    font-size: calc(10px + 0.390625vw);
+                }
+
+                &:hover{
+                    cursor: pointer;
                 }
             }
 
+            .active{
+                background-color: $highlight2;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            }
+        }
+
+        .landingContentDisplay{
+            overflow: visible;
+            height: 64vh;
+
+            @media (max-width: 700px){
+                height: 54vh;
+            }
+
             & > div{    
-                width: auto;
                 background-color: $backgroundVariant;
                 border-radius: 20px;
                 padding: 2vw;
-                margin: 5vh 0;
+                margin: 0 auto;
                 box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+                transition: 200ms;
     
                 h4{
-                    font-size: calc(20px + 0.390625vw);
                     font-family: Plus Jakarta Sans;
                     font-weight: 600;
                     color: white;
@@ -155,38 +239,136 @@
                 img{
                     border-radius: 10px;
                 }
-    
-                &:hover{
-                    cursor: pointer;
-    
+            }
+
+            .tasks{
+                width: 60%;
+                
+                @media (max-width: 1000px){
+                    width: 80%;
+                }
+                @media (max-width: 700px){
+                    width: 90%;
+                }
+
+                h4{
+                    font-size: calc(20px + 0.390625vw);
+                    width: 100%;
+                    padding-bottom: 3vh;
+
+                    @media (max-width: 800px){
+                        font-size: calc(16px + 0.390625vw);
+                    }
+                    @media (max-width: 700px){
+                        font-size: calc(14px + 0.390625vw);
+                        font-weight: 500;
+                    }
+                    @media (max-width: 400px){
+                        font-size: calc(12px + 0.390625vw);
+                        text-align: center;
+                    }
+                }
+
+                img{
+                    width: 100%;
                 }
             }
-    
-            .softwareBenefits{
+
+            .notifications{
                 display: flex;
                 justify-content: space-between;
                 width: 50%;
-                height: 50vh;
-    
-                h4{
-                    display: inline-block;
+                height: auto;
+
+                @media (max-width: 1200px){
+                    width: 60%;
+                }
+                @media (max-width: 1000px){
+                    width: 70%;
+                }
+                @media (max-width: 800px){
+                    width: 80%;
+                }
+                @media (max-width: 600px){
+                    width: 90%;
+                }
+
+                .textContent{
                     width: 50%;
-                    padding-top: 5vh;
+                    display: inline-block;
+
+                    @media (max-width: 420px){
+                        width: 55%;
+                    }
+    
+                    h4{
+                        font-size: calc(22px + 0.390625vw);
+                        width: 100%;
+                        padding-top: 5vh;
+
+                        @media (max-width: 1300px){
+                            font-size: calc(18px + 0.390625vw);
+                        }
+                        @media (max-width: 700px){
+                            font-size: calc(14px + 0.390625vw);
+                        }
+                        @media (max-width: 420px){
+                            padding-top: 2vh;
+                            font-size: calc(12px + 0.390625vw);
+                        }
+    
+                        &::after{
+                            content: '';
+                            display: block;
+                            height: 8px;
+                            width: 60%;
+                            margin-top: 2vh;
+                            background-color: $highlight2;
+
+                            @media (max-width: 700px){
+                                height: 4px;
+                            }
+                        }
+                    }
+
+                    p{
+                        width: 90%;
+                        padding-top: 3vh;
+                        color: white;
+                        font-size: calc(16px + 0.390625vw);
+                        font-family: Plus Jakarta Sans;
+                        font-weight: 500;
+
+                        @media (max-width: 1300px){
+                            font-size: calc(14px + 0.390625vw);
+                        }
+                        @media (max-width: 700px){
+                            font-size: calc(12px + 0.390625vw);
+                            padding-top: 1vh;
+                        }
+                        @media (max-width: 420px){
+                            font-size: calc(10px + 0.390625vw);
+                        }
+                    }
                 }
     
                 img{
                     display: inline-block;
-                    width: auto;
-                    height: 50vh;
-                    width: auto;
+                    width: 45%;
+                    height: auto;
+
+                    @media (max-width: 420px){
+                        width: 40%;
+                    }
                 }
             }
-    
-            .softwareMessaging{
-                width: 50%;
-                height: 60vh;
+
+            .messaging{
+                width: 40%;
+                height: calc(100% - 4vh);
     
                 h4{
+                    font-size: calc(22px + 0.390625vw);
                     margin-top: 2vh;
                 }
     
@@ -198,6 +380,7 @@
     
                     img{
                         height: 100%;
+                        width: auto;
                     }
     
                     .img1{
@@ -218,13 +401,32 @@
         width: 100%;
         height: 80vh;
 
+        @media (max-width: 1000px){
+            height: 70vh;
+        }
+        @media (max-width: 840px){
+            height: 160vh;
+            padding-bottom: 5vh;
+        }
+
         .pricingCards{
             width: 80%;
             height: 100%;
-            margin-left: 10%;
+            margin: 0 auto;
             display: flex;
             justify-content: space-around;
             align-items: center;
+            overflow: visible;
+
+            @media (max-width: 1700px){
+                width: 90%;
+            }
+            @media (max-width: 1400px){
+                width: 95%;
+            }
+            @media (max-width: 840px){
+                flex-direction: column;
+            }
 
             & > div{
                 width: 30%;
@@ -233,6 +435,27 @@
                 border-radius: 20px;
                 overflow: hidden;
                 transition: 200ms;
+
+                @media (max-width: 1200px){
+                    height: 70%;
+                }
+                @media (max-width: 840px){
+                    width: 50%;
+                    height: 30%;
+                }
+                @media (max-width: 620px){
+                    width: 60%;
+                    height: 30%;
+                }
+                @media (max-width: 530px){
+                    width: 70%;
+                }
+                @media (max-width: 430px){
+                    width: 80%;
+                }
+                @media (max-width: 380px){
+                    width: 85%;
+                }
 
                 &:hover{
                     transform: scale(103%);
@@ -251,6 +474,10 @@
                         font-size: calc(26px + 0.390625vw);
                         font-family: Plus Jakarta Sans;
                         font-weight: 600;
+
+                        @media (max-width: 1200px){
+                            font-size: calc(20px + 0.390625vw);
+                        }
                     }
                 }
 
@@ -261,11 +488,19 @@
                     justify-content: center;
                     width: 100%;
                     height: 25%;
+
+                    @media (max-width: 1200px){
+                        height: 20%;
+                    }
                     
                     p{
                         font-size: calc(38px + 0.390625vw);
                         font-family: Plus Jakarta Sans;
                         font-weight: 600;
+
+                        @media (max-width: 1200px){
+                            font-size: calc(30px + 0.390625vw);
+                        }
 
                         span{
                             font-size: calc(24px + 0.390625vw);
@@ -276,6 +511,11 @@
                 .modelContent{
                     width: 100%;
                     height: 40%;
+                    overflow: hidden;
+
+                    @media (max-width: 1200px){
+                        height: 45%;
+                    }
 
                     .modelAspect{
                         display: flex;
@@ -283,6 +523,7 @@
                         justify-content: center;
                         height: 3.5vh;
                         margin-bottom: 1vh;
+                        overflow: hidden;
 
                         img{
                             height: 100%;
@@ -293,6 +534,17 @@
                         p{
                             font-size: calc(14px + 0.390625vw);
                             font-family: Plus Jakarta Sans;
+
+                            @media (max-width: 1400px){
+                                font-size: calc(12px + 0.390625vw);
+                            }
+                            @media (max-width: 1200px){
+                                font-size: calc(10px + 0.390625vw);
+                                margin-bottom: 0.5vh;
+                            }
+                            @media (max-width: 840px){
+                                font-size: calc(14px + 0.390625vw);
+                            }
                         }
                     }
                 }

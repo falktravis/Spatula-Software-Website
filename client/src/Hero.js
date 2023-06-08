@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import Typed from 'react-typed';
 import { useNavigate } from "react-router-dom"
 import {createClient} from '@supabase/supabase-js';
@@ -9,15 +9,64 @@ import notification3 from './imgs/Notification3.png';
 import notification4 from './imgs/Notification4.png';
 import wavesImg1 from './imgs/waves1.svg';
 import wavesImg2 from './imgs/waves2.svg';
+import commandsImg from './imgs/Commands.png';
 import './styles/hero.scss';
 
 export default function Hero() {
     const pricing = useRef();
+
+    //landing page content function displays
+    const tasksContent = () => {
+
+        return(
+            <div className="landingContentDisplay">
+                <div className="tasks">
+                    <h4>Use Discord commands to create tasks from anywhere that will notify you about Ebay or Facebook Marketplace posts, each task will monitor a different product.</h4>
+                    <img src={commandsImg} alt="Commands Image" />
+                </div>
+            </div>
+        );
+    }
+
+    const notificationContent = () => {
+
+        return(
+            <div className="landingContentDisplay">
+                <div className="notifications">
+                    <img src={notification3} alt="Screenshot of notification" />
+                    <div className="textContent">
+                        <h4>Get notifications on your phone and computer, less than 5 minutes after an item is listed.</h4>
+                        <p>Notifications will display all the info about the item including, title, price, location, and description</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    const messagingContent = () => {
+
+        return(
+            <div className="landingContentDisplay">
+                <div className="messaging">
+                    <div className="imgContainer">
+                        <img className="img1" src={notification1} alt="Screenshot of notification with message button" />
+                        <img src={notification4} alt="Screenshot of notification with message sent" />
+                    </div>
+                    <h4>Automatically message Facebook users about their post, or message with just a single click.</h4>
+                </div>
+            </div>
+        );
+    }
+
+    const [landingContentDisplay, setLandingContentDisplay] = useState(tasksContent);
+    const [tasksContentClass, setTasksContentClass] = useState('active');
+    const [notificationsContentClass, setNotificationsContentClass] = useState('');
+    const [messagingContentClass, setMessagingContentClass] = useState('');
     const navigate = useNavigate();
     const supabase = createClient(
         process.env.SUPABASEURL,
         process.env.SUPABASEPUBLICANONKEY
-    )
+    );
 
     useEffect(() => {
         setSession();
@@ -75,23 +124,13 @@ export default function Hero() {
                 <img src={wavesImg1} alt="Wave Image" className='waves1' />
             </div>
             <div className="landingPageContent">
-                <div className="row1">
-                    <p>Use Discord commands to create tasks from anywhere that will run simultaneously and notify you about posts.</p>
-                    <div className="softwareBenefits">
-                        <img src={notification3} alt="Screenshot of notification" />
-                        <h4>Get notifications on your phone and computer, less than 5 minutes after they are listed.</h4>
-                    </div>
+                <h2>How Does it Work?</h2>
+                <div className="contentButtons">
+                    <button className={tasksContentClass} onClick={() => {setLandingContentDisplay(tasksContent); setTasksContentClass('active'); setNotificationsContentClass(''); setMessagingContentClass('');}}>1. Tasks</button>
+                    <button className={notificationsContentClass} onClick={() => {setLandingContentDisplay(notificationContent); setTasksContentClass(''); setNotificationsContentClass('active'); setMessagingContentClass('');}}>2. Notifications</button>
+                    <button className={messagingContentClass} onClick={() => {setLandingContentDisplay(messagingContent); setTasksContentClass(''); setNotificationsContentClass(''); setMessagingContentClass('active');}}>3. Messaging</button>
                 </div>
-                <div className="row2">
-                    <div className="softwareMessaging">
-                        <div className="imgContainer">
-                            <img className="img1" src={notification1} alt="Screenshot of notification with message button" />
-                            <img src={notification4} alt="Screenshot of notification with message sent" />
-                        </div>
-                        <h4>Automatically message Facebook users about their post, or message with just a single click.</h4>
-                    </div>
-                    <p>Effectively automate the flipping process</p>
-                </div>
+                {landingContentDisplay}
             </div>
             <img src={wavesImg2} alt="Wave Image" className='waves2' />
             <div ref={pricing} className='Pricing'>
@@ -114,7 +153,7 @@ export default function Hero() {
                             </div>
                             <div className="modelAspect">
                                 <img src={checkIcon} alt="check" />
-                                <p>Facebook Marketplace Notifications</p>
+                                <p>Facebook Notifications</p>
                             </div>
                             <div className="modelAspect">
                                 <img src={checkIcon} alt="check" />
@@ -147,7 +186,7 @@ export default function Hero() {
                             </div>
                             <div className="modelAspect">
                                 <img src={checkIcon} alt="check" />
-                                <p>Facebook Marketplace Notifications</p>
+                                <p>Facebook Notifications</p>
                             </div>
                             <div className="modelAspect">
                                 <img src={checkIcon} alt="check" />
@@ -180,7 +219,7 @@ export default function Hero() {
                             </div>
                             <div className="modelAspect">
                                 <img src={checkIcon} alt="check" />
-                                <p>Facebook Marketplace Notifications</p>
+                                <p>Facebook Notifications</p>
                             </div>
                             <div className="modelAspect">
                                 <img src={checkIcon} alt="check" />

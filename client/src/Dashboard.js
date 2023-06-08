@@ -40,12 +40,14 @@ export default function Dashboard() {
         if(userSubscription == "None"){
             return(
                 <div className="userButtons">
+                    <button className='logOut' onClick={() => logOut()}>Log Out</button>
                     <button href="https://billing.stripe.com/p/login/test_3cscQq8bs6Gn5dS3cc">Manage Plan</button>
                 </div>
             );
         }else{
             return(
                 <div className="userButtons">
+                    <button className='logOut' onClick={() => logOut()}>Log Out</button>
                     <button onClick={() => setIsPopup(true)}>Purchase</button>
                 </div>
             );
@@ -67,6 +69,11 @@ export default function Dashboard() {
         } catch (error) {
             console.error('Error:', error);
         }
+    }
+
+    const logOut = () => {
+        localStorage.removeItem('userData');
+        window.location.href = 'http://localhost:3301';
     }
 
     return (
