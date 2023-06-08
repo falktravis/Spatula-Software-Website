@@ -216,10 +216,10 @@
 
         .landingContentDisplay{
             overflow: visible;
-            height: 64vh;
+            height: 50vw;
 
-            @media (max-width: 700px){
-                height: 54vh;
+            @media (max-width: 600px){
+                height: 60vw;
             }
 
             & > div{    
@@ -364,19 +364,28 @@
             }
 
             .messaging{
-                width: 40%;
-                height: calc(100% - 4vh);
+                width: min-content;
     
                 h4{
-                    font-size: calc(22px + 0.390625vw);
+                    font-size: calc(18px + 0.390625vw);
                     margin-top: 2vh;
+
+                    @media (max-width: 600px){
+                        font-size: calc(16px + 0.390625vw);
+                    }
                 }
     
                 .imgContainer{
-                    width: auto;
-                    height: 50vh;
+                    width: fit-content;
+                    height: 40vw;
                     display: flex;
-                    justify-content: center;
+
+                    @media (max-width: 600px){
+                        height: 50vw;
+                    }
+                    @media (max-width: 450px){
+                        height: 60vw;
+                    }
     
                     img{
                         height: 100%;
