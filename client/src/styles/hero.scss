@@ -24,7 +24,7 @@
         .heroContent{
             width: 45%;
             margin-left: 10%;
-            padding-top: 11vh;
+            padding-top: 10vh;
 
             @media (max-width: 1200px){
                 width: 50%;
@@ -216,10 +216,19 @@
 
         .landingContentDisplay{
             overflow: visible;
-            height: 50vw;
+            height: 40vw;
 
+            @media (max-width: 1500px){
+                height: 55vw;
+            }
             @media (max-width: 600px){
-                height: 60vw;
+                height: 65vw;
+            }
+            @media (max-width: 450px){
+                height: 70vw;
+            }
+            @media (max-width: 400px){
+                height: 75vw;
             }
 
             & > div{    
@@ -373,18 +382,24 @@
                     @media (max-width: 600px){
                         font-size: calc(16px + 0.390625vw);
                     }
+                    @media (max-width: 400px){
+                        font-size: calc(14px + 0.390625vw);
+                    }
                 }
     
                 .imgContainer{
                     width: fit-content;
-                    height: 40vw;
+                    height: 30vw;
                     display: flex;
 
+                    @media (max-width: 1500px){
+                        height: 40vw;
+                    }
                     @media (max-width: 600px){
                         height: 50vw;
                     }
                     @media (max-width: 450px){
-                        height: 60vw;
+                        height: 55vw;
                     }
     
                     img{
