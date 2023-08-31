@@ -5,7 +5,7 @@ require('dotenv').config();
 var cors = require('cors');
 const stripe = require('stripe')(process.env.STRIPE_TEST_KEY);
 
-const PORT = process.env.PORT || 3301;
+const PORT = process.env.PORT || 3301; // find correct port
 
 //Database connection
 const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -54,11 +54,9 @@ app.listen(PORT, () => {
 app.get('/user-data', async (req, res) => {
   try {
     const { userId } = req.query;
-    console.log(userId);
 
     // Retrieve data from MongoDB
     const data = await userDB.findOne({UserId: userId});
-    console.log(data);
 
     res.json(data); // Send the retrieved data as a JSON response
   } catch (error) {
@@ -74,7 +72,7 @@ app.post('/create-checkout-session', async (req, res) => {
     const priceId = req.query.priceId;
 
     let session;
-    if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){
+    if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){ //price_1NjNhZK2JasPd9Yuf9mGP9Nm
       session = await stripe.checkout.sessions.create({
         line_items: [
           {
@@ -89,6 +87,7 @@ app.post('/create-checkout-session', async (req, res) => {
             discordId: discordId,
           },
         },
+        allow_promotion_codes: true,
         success_url: `http://localhost:3301/Dashboard?success=true`,
         cancel_url: `http://localhost:3301/Dashboard?canceled=true`,
       });
@@ -100,15 +99,13 @@ app.post('/create-checkout-session', async (req, res) => {
             quantity: 1,
           },
         ],
-        metadata: {
-          discordId: discordId,
-        },
         subscription_data: {
           metadata: {
             discordId: discordId,
           },
         },
         mode: 'subscription',
+        allow_promotion_codes: true,
         success_url: `http://localhost:3301/Dashboard?success=true`,
         cancel_url: `http://localhost:3301/Dashboard?canceled=true`,
       });
@@ -141,27 +138,26 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
       console.log('create sub');
 
       const discordId = event.data.object.metadata.discordId;
-      if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){
-        await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 5});
-      }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){
-        await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 10});
-      }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){
-        await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 20});
+      if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){//price_1NjNhZK2JasPd9Yuf9mGP9Nm
+        await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 2, MessageAccount: null});
+      }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){//price_1NjNiMK2JasPd9Yu8sGt7zWM
+        await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 5, MessageAccount: null});
+      }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){//price_1NjNjDK2JasPd9YusTMvOEJ5
+        await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 10, MessageAccount: null});
       }
       
     }else if(type === 'customer.subscription.updated'){
-
       console.log("update sub tier");
 
       //delete user from db
-      await userDB.deleteOne({StripeId: customerId});
+      //await userDB.deleteOne({StripeId: customerId});
 
-      if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){
+      if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){//price_1NjNhZK2JasPd9Yuf9mGP9Nm
+        await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 2})
+      }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){//price_1NjNiMK2JasPd9Yu8sGt7zWM
         await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 5})
-      }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){
+      }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){//price_1NjNjDK2JasPd9YusTMvOEJ5
         await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 10})
-      }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){
-        await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 20})
       }
     }else if(type === 'customer.subscription.deleted'){
       console.log('delete sub');

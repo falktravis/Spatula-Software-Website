@@ -21,7 +21,7 @@ export default function Hero() {
         return(
             <div className="landingContentDisplay">
                 <div className="tasks">
-                    <h4>Use Discord commands to create tasks from anywhere that will notify you about Ebay or Facebook Marketplace posts, each task will monitor a different product.</h4>
+                    <h4>Use Discord commands to create tasks from anywhere that will notify you about Facebook Marketplace posts, each task will monitor a different product.</h4>
                     <img src={commandsImg} alt="Commands Image" />
                 </div>
             </div>
@@ -35,7 +35,7 @@ export default function Hero() {
                 <div className="notifications">
                     <img src={notification3} alt="Screenshot of notification" />
                     <div className="textContent">
-                        <h4>Get notifications on your phone and computer, less than 5 minutes after an item is listed.</h4>
+                        <h4>Get notifications on your phone and computer, when an item is listed.</h4>
                         <p>Notifications will display all the info about the item including, title, price, location, and description</p>
                     </div>
                 </div>
@@ -74,7 +74,7 @@ export default function Hero() {
     }, [])
     
     const setSession = async () => {
-        if(localStorage.getItem('userData') == null){
+        if(localStorage.getItem('userData') == null && !window.location.search.includes('logout')){
             const session = await supabase.auth.getSession();
             if(session != null){
                 localStorage.setItem("userData", JSON.stringify(session.data.session.user.user_metadata));
@@ -110,17 +110,17 @@ export default function Hero() {
             <div className="hero">
                 <div className="heroContent">
                     <h2>The Only Professional Tool For <Typed
-                        strings={['Flippers', 'Facebook Marketplace', 'Ebay']}
+                        strings={['Flippers', 'Facebook Marketplace', 'Making Money']}
                             typeSpeed={60}
                             backSpeed={60}
                             backDelay={2000}
                             loop >
                         </Typed>
                     </h2>
-                    <p>Up to 10x faster than competitors with automatic messaging for Facebook Marketplace.</p>
+                    <p>Get notifications about new posts and automatically message the owner.</p>
                     <a onClick={handleDashboardClick}><span>Free Trial</span></a>
                 </div>
-
+                <img src={heroImg} alt="Iphone and Computer Software Example" className='heroImg' />
                 <img src={wavesImg1} alt="Wave Image" className='waves1' />
             </div>
             <div className="landingPageContent">
@@ -140,16 +140,12 @@ export default function Hero() {
                             <p>Basic</p>
                         </div>
                         <div className="modelPrice">
-                            <p>$30/<span>mo</span></p>
+                            <p>$35/<span>mo</span></p>
                         </div>
                         <div className="modelContent">
                             <div className="modelAspect">
                                 <img src={checkIcon} alt="check" />
-                                <p>5 Concurrent Tasks</p>
-                            </div>
-                            <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
-                                <p>Ebay Notifications</p>
+                                <p>2 Concurrent Tasks</p>
                             </div>
                             <div className="modelAspect">
                                 <img src={checkIcon} alt="check" />
@@ -173,16 +169,12 @@ export default function Hero() {
                             <p>Standard</p>
                         </div>
                         <div className="modelPrice">
-                            <p>$40/<span>mo</span></p>
+                            <p>$45/<span>mo</span></p>
                         </div>
                         <div className="modelContent">
                             <div className="modelAspect">
                                 <img src={checkIcon} alt="check" />
-                                <p>10 Concurrent Tasks</p>
-                            </div>
-                            <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
-                                <p>Ebay Notifications</p>
+                                <p>5 Concurrent Tasks</p>
                             </div>
                             <div className="modelAspect">
                                 <img src={checkIcon} alt="check" />
@@ -206,16 +198,12 @@ export default function Hero() {
                             <p>Premium</p>
                         </div>
                         <div className="modelPrice">
-                            <p>$50/<span>mo</span></p>
+                            <p>$55/<span>mo</span></p>
                         </div>
                         <div className="modelContent">
                             <div className="modelAspect">
                                 <img src={checkIcon} alt="check" />
-                                <p>20 Concurrent Tasks</p>
-                            </div>
-                            <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
-                                <p>Ebay Notifications</p>
+                                <p>10 Concurrent Tasks</p>
                             </div>
                             <div className="modelAspect">
                                 <img src={checkIcon} alt="check" />

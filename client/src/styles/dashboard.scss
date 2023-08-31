@@ -123,6 +123,7 @@
                 font-weight: 600;
                 transition: 200ms ease-out;
                 border: 2px solid $highlight2;
+                position: relative;
 
                 @media (max-width: 1400px){
                     width: 13vw;

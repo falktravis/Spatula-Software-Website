@@ -5,7 +5,6 @@ import './styles/dashboard.scss';
 
 export default function Dashboard() {
     const userData = JSON.parse(localStorage.getItem('userData'));
-    console.log(userData);
     const [userSubscription, setUserSubscription] = useState('None');
     const [isPopup, setIsPopup] = useState(false);
 
@@ -16,14 +15,13 @@ export default function Dashboard() {
             try{
                 const response = await fetch(`/user-data?userId=${userData.provider_id}`);
                 const data = await response.json();
-                console.log(data);
     
                 if(data != null){
-                    if(data.ConcurrentTasks == 5){
+                    if(data.ConcurrentTasks == 2){
                         setUserSubscription("Basic");
-                    }else if(data.ConcurrentTasks == 10){
+                    }else if(data.ConcurrentTasks == 5){
                         setUserSubscription("Standard");
-                    }else if(data.ConcurrentTasks == 20){
+                    }else if(data.ConcurrentTasks == 10){
                         setUserSubscription("Premium");
                     }
                 }
@@ -36,12 +34,12 @@ export default function Dashboard() {
     }, [])
 
     const actionButton = () => {
-
-        if(userSubscription == "None"){
+        console.log(userSubscription);
+        if(userSubscription != "None"){
             return(
                 <div className="userButtons">
                     <button className='logOut' onClick={() => logOut()}>Log Out</button>
-                    <button href="https://billing.stripe.com/p/login/test_3cscQq8bs6Gn5dS3cc">Manage Plan</button>
+                    <button onClick={() => window.open("https://billing.stripe.com/p/login/test_3cscQq8bs6Gn5dS3cc")}>Manage Plan</button>
                 </div>
             );
         }else{
@@ -73,8 +71,15 @@ export default function Dashboard() {
 
     const logOut = () => {
         localStorage.removeItem('userData');
-        window.location.href = 'http://localhost:3301';
+
+        window.location.href = 'http://localhost:3301/?logout';
     }
+
+    /**
+     * Basic - price_1NjNhZK2JasPd9Yuf9mGP9Nm
+     * Standard - price_1NjNiMK2JasPd9Yu8sGt7zWM
+     * Premium - price_1NjNjDK2JasPd9YusTMvOEJ5
+     */
 
     return (
         <div className="dashboard">
@@ -82,7 +87,7 @@ export default function Dashboard() {
                 <h1><a href='/'>Spatula Software</a></h1>
                 <ul>
                     <li>Pricing</li>
-                    <li><a >Dashboard</a></li>
+                    <li><a>Dashboard</a></li>
                 </ul>
             </div>
             <div className='dashboardDisplay'>
@@ -103,16 +108,12 @@ export default function Dashboard() {
                                 <p>Basic</p>
                             </div>
                             <div className="modelPrice">
-                                <p>$30/<span>mo</span></p>
+                                <p>$35/<span>mo</span></p>
                             </div>
                             <div className="modelContent">
                                 <div className="modelAspect">
                                     <img src={checkIcon} alt="check" />
-                                    <p>5 Concurrent Tasks</p>
-                                </div>
-                                <div className="modelAspect">
-                                    <img src={checkIcon} alt="check" />
-                                    <p>Ebay Notifications</p>
+                                    <p>2 Concurrent Tasks</p>
                                 </div>
                                 <div className="modelAspect">
                                     <img src={checkIcon} alt="check" />
@@ -136,16 +137,12 @@ export default function Dashboard() {
                                 <p>Standard</p>
                             </div>
                             <div className="modelPrice">
-                                <p>$40/<span>mo</span></p>
+                                <p>$45/<span>mo</span></p>
                             </div>
                             <div className="modelContent">
                                 <div className="modelAspect">
                                     <img src={checkIcon} alt="check" />
-                                    <p>10 Concurrent Tasks</p>
-                                </div>
-                                <div className="modelAspect">
-                                    <img src={checkIcon} alt="check" />
-                                    <p>Ebay Notifications</p>
+                                    <p>5 Concurrent Tasks</p>
                                 </div>
                                 <div className="modelAspect">
                                     <img src={checkIcon} alt="check" />
@@ -169,16 +166,12 @@ export default function Dashboard() {
                                 <p>Premium</p>
                             </div>
                             <div className="modelPrice">
-                                <p>$50/<span>mo</span></p>
+                                <p>$55/<span>mo</span></p>
                             </div>
                             <div className="modelContent">
                                 <div className="modelAspect">
                                     <img src={checkIcon} alt="check" />
-                                    <p>20 Concurrent Tasks</p>
-                                </div>
-                                <div className="modelAspect">
-                                    <img src={checkIcon} alt="check" />
-                                    <p>Ebay Notifications</p>
+                                    <p>10 Concurrent Tasks</p>
                                 </div>
                                 <div className="modelAspect">
                                     <img src={checkIcon} alt="check" />
