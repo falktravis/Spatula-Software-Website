@@ -72,7 +72,7 @@ export default function Dashboard() {
     const logOut = () => {
         localStorage.removeItem('userData');
 
-        window.location.href = 'http://localhost:3301/?logout';
+        window.location.href = 'http://localhost:3301/';
     }
 
     /**

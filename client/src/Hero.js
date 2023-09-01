@@ -74,7 +74,7 @@ export default function Hero() {
     }, [])
     
     const setSession = async () => {
-        if(localStorage.getItem('userData') == null && !window.location.search.includes('logout')){
+        if(localStorage.getItem('userData') == null && window.location.search.includes('login')){
             const session = await supabase.auth.getSession();
             if(session != null){
                 localStorage.setItem("userData", JSON.stringify(session.data.session.user.user_metadata));
@@ -90,7 +90,10 @@ export default function Hero() {
     const handleDashboardClick = async () => {
         if(localStorage.getItem('userData') == null){
             await supabase.auth.signInWithOAuth({
-                provider: "discord"
+                provider: "discord", 
+                options: { 
+                  redirectTo: 'http://localhost:3301/?login' 
+                } 
             })
         }else{
             navigate('/Dashboard');
