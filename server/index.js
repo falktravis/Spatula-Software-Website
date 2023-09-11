@@ -5,7 +5,7 @@ require('dotenv').config();
 var cors = require('cors');
 const stripe = require('stripe')(process.env.STRIPE_TEST_KEY);
 
-const PORT = process.env.PORT || 3301; // find correct port
+const PORT = 3301; //process.env.PORT || 3301
 
 //discord.js set up
 const { Client, GatewayIntentBits } = require('discord.js');
