@@ -8,7 +8,7 @@ const stripe = require('stripe')(process.env.STRIPE_TEST_KEY);
 const PORT = 3301; //process.env.PORT || 3301
 
 //discord.js set up
-const { Client, GatewayIntentBits } = require('discord.js');
+/*const { Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -16,7 +16,7 @@ const client = new Client({
   ],
 });
 client.login(process.env.DISCORD_BOT_TOKEN);
-console.log(process.env.DISCORD_BOT_TOKEN); //!testing
+console.log(process.env.DISCORD_BOT_TOKEN);*/ //!testing
 
 //Database connection
 const { MongoClient, ServerApiVersion } = require('mongodb');

@@ -4,7 +4,8 @@
   "description": "server",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "pm2": "pm2 start server/index.js"
   },
   "author": "Travis Falk",
   "license": "ISC",
