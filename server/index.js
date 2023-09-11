@@ -7,6 +7,17 @@ const stripe = require('stripe')(process.env.STRIPE_TEST_KEY);
 
 const PORT = process.env.PORT || 3301; // find correct port
 
+//discord.js set up
+const { Client, GatewayIntentBits } = require('discord.js');
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.Invites
+  ],
+});
+client.login(process.env.DISCORD_BOT_TOKEN);
+console.log(process.env.DISCORD_BOT_TOKEN); //!testing
+
 //Database connection
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://SpatulaSoftware:jpTANtS4n59oqlam@spatula-software.tyas5mn.mongodb.net/?retryWrites=true&w=majority";
