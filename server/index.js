@@ -82,7 +82,7 @@ app.use(express.static(path.resolve(__dirname, '../client/dist')));
   console.log(`Server listening on ${PORT}`);
 });*/
 httpsServer.listen(443, 'spatulasoftware.com');
-httpServer.listen(80, 'spatulasoftware.com');
+httpServer.listen(3301, 'spatulasoftware.com');
 
 app.get('/user-data', async (req, res) => {
   try {
