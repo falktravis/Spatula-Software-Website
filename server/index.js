@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 require('dotenv').config();
 var cors = require('cors');
 const fs = require('fs');
+const http = require('http');
+const https = require('https');
 const stripe = require('stripe')(process.env.STRIPE_TEST_KEY);
 
 const PORT = 3301; //process.env.PORT || 3301
@@ -51,7 +53,7 @@ let httpsOptions = {
   key: fs.readFileSync(path.join(__dirname, 'ssl', 'spatulasoftware_key.key'))
 };
 const httpsServer = https.createServer(httpsOptions, app);
-const httpServer = https.createServer(app);
+const httpServer = http.createServer(app);
 
 // Custom middleware to save the raw request body for webhooks
 app.use((request, response, next) => {
