@@ -3,9 +3,6 @@ const path = require('path');
 const bodyParser = require("body-parser");
 require('dotenv').config();
 var cors = require('cors');
-const fs = require('fs');
-const http = require('http');
-const https = require('https');
 const stripe = require('stripe')(process.env.STRIPE_TEST_KEY);
 
 const PORT = 3301; //process.env.PORT || 3301
@@ -46,15 +43,6 @@ let userDB;
 
 const app = express();
 
-//https stuff
-let httpsOptions = {
-  cert: fs.readFileSync(path.join(__dirname, 'ssl', 'spatulasoftware_com.crt')),
-  ca: fs.readFileSync(path.join(__dirname, 'ssl', 'spatulasoftware_com.ca-bundle')),
-  key: fs.readFileSync(path.join(__dirname, 'ssl', 'spatulasoftware_key.key'))
-};
-const httpsServer = https.createServer(httpsOptions, app);
-const httpServer = http.createServer(app);
-
 // Custom middleware to save the raw request body for webhooks
 app.use((request, response, next) => {
   request.rawBody = '';
@@ -64,25 +52,15 @@ app.use((request, response, next) => {
   next();
 });
 
-//middleware to redirect http to https
-app.use((req, res, next) => {
-  if(req.protocol === 'http') {
-    res.redirect(301, `https://${req.headers.host}${req.url}`);
-  }
-  next();
-});
-
 //general middleware
 app.use(express.static('public'));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, '../client/dist')));
 
-/*app.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
-});*/
-httpsServer.listen(443, 'spatulasoftware.com');
-httpServer.listen(3301, 'spatulasoftware.com');
+});
 
 app.get('/user-data', async (req, res) => {
   try {
