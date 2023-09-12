@@ -46,9 +46,9 @@ const app = express();
 
 //https stuff
 let httpsOptions = {
-  cert: fs.readFileSync('./ssl/spatulasoftware_com.crt'),
-  ca: fs.readFileSync('./ssl/spatulasoftware_com.ca-bundle'),
-  key: fs.readFileSync('./ssl/spatulasoftware_key.key')
+  cert: fs.readFileSync(path.join(__dirname, 'ssl', 'spatulasoftware_com.crt')),
+  ca: fs.readFileSync(path.join(__dirname, 'ssl', 'spatulasoftware_com.ca-bundle')),
+  key: fs.readFileSync(path.join(__dirname, 'ssl', 'spatulasoftware_key.key'))
 };
 const httpsServer = https.createServer(httpsOptions, app);
 const httpServer = https.createServer(app);
