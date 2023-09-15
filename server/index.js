@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 require('dotenv').config();
 var cors = require('cors');
 const stripe = require('stripe')(process.env.STRIPE_TEST_KEY);
+console.log(process.env.STRIPE_TEST_KEY);
 
 const PORT = 3301; //process.env.PORT || 3301
 
