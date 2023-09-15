@@ -129,7 +129,7 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 });
 
-const endpointSecret = "whsec_MPA3UT8bGTPQuM1PiDsyQ8YDHUrrSKx0";
+const endpointSecret = "whsec_VSi8trlRb0lUxE4fKnAbdTNWAa1a3bTW";
 //"we_1NqfI2K2JasPd9YuNLO3ALYx"
 //"whsec_01e75c99b560466824a03d596993f6fcade9fc1ed151b7f062b113aad1d6740d"
 
