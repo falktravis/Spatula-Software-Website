@@ -130,8 +130,6 @@ app.post('/create-checkout-session', async (req, res) => {
 });
 
 const endpointSecret = "whsec_VSi8trlRb0lUxE4fKnAbdTNWAa1a3bTW";
-//"we_1NqfI2K2JasPd9YuNLO3ALYx"
-//"whsec_01e75c99b560466824a03d596993f6fcade9fc1ed151b7f062b113aad1d6740d"
 
 //handle webhooks
 app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
@@ -175,10 +173,9 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
         //delete database user
         await userDB.deleteOne({StripeId: customerId});
       }
-      
-      // Return a 200 response to acknowledge receipt of the event
-      response.sendStatus(200);
     }
+    // Return a 200 response to acknowledge receipt of the event
+    response.sendStatus(200);
   } catch (err) {
     console.log('error: ' + err);
     response.status(400).send(`Webhook Error: ${err.message}`);
