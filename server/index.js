@@ -142,44 +142,43 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
 
     //get variables
     const type = event.type; // Type of event
-    const customerId = event.data.object.customer; // ID of the customer
-    const priceId = event.data.object.items.data[0].price.id; //priceId of the 
-
     console.log(type);
 
-    if(type === 'customer.subscription.created'){
-      console.log('create sub');
+    if(type === 'customer.subscription.created' || type === 'customer.subscription.updated' || type === 'customer.subscription.deleted'){
+      const customerId = event.data.object.customer; // ID of the customer
+      const priceId = event.data.object.items.data[0].price.id; //priceId of the 
 
-      const discordId = event.data.object.metadata.discordId;
-      if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){//price_1NjNhZK2JasPd9Yuf9mGP9Nm
-        await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 2, MessageAccount: null});
-      }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){//price_1NjNiMK2JasPd9Yu8sGt7zWM
-        await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 5, MessageAccount: null});
-      }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){//price_1NjNjDK2JasPd9YusTMvOEJ5
-        await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 10, MessageAccount: null});
+      if(type === 'customer.subscription.created'){
+        console.log('create sub');
+
+        const discordId = event.data.object.metadata.discordId;
+        if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){//price_1NjNhZK2JasPd9Yuf9mGP9Nm
+          await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 2, MessageAccount: null});
+        }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){//price_1NjNiMK2JasPd9Yu8sGt7zWM
+          await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 5, MessageAccount: null});
+        }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){//price_1NjNjDK2JasPd9YusTMvOEJ5
+          await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 10, MessageAccount: null});
+        }
+        
+      }else if(type === 'customer.subscription.updated'){
+        console.log("update sub tier");
+
+        if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){//price_1NjNhZK2JasPd9Yuf9mGP9Nm
+          await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 2})
+        }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){//price_1NjNiMK2JasPd9Yu8sGt7zWM
+          await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 5})
+        }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){//price_1NjNjDK2JasPd9YusTMvOEJ5
+          await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 10})
+        }
+      }else if(type === 'customer.subscription.deleted'){
+        console.log('delete sub');
+        //delete database user
+        await userDB.deleteOne({StripeId: customerId});
       }
       
-    }else if(type === 'customer.subscription.updated'){
-      console.log("update sub tier");
-
-      //delete user from db
-      //await userDB.deleteOne({StripeId: customerId});
-
-      if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){//price_1NjNhZK2JasPd9Yuf9mGP9Nm
-        await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 2})
-      }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){//price_1NjNiMK2JasPd9Yu8sGt7zWM
-        await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 5})
-      }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){//price_1NjNjDK2JasPd9YusTMvOEJ5
-        await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 10})
-      }
-    }else if(type === 'customer.subscription.deleted'){
-      console.log('delete sub');
-      //delete database user
-      await userDB.deleteOne({StripeId: customerId});
+      // Return a 200 response to acknowledge receipt of the event
+      response.sendStatus(200);
     }
-    
-    // Return a 200 response to acknowledge receipt of the event
-    response.sendStatus(200);
   } catch (err) {
     console.log('error: ' + err);
     response.status(400).send(`Webhook Error: ${err.message}`);
