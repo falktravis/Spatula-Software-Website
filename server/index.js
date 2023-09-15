@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 require('dotenv').config();
 var cors = require('cors');
 const stripe = require('stripe')(process.env.STRIPE_TEST_KEY);
-console.log(process.env.STRIPE_TEST_KEY);
 
 const PORT = 3301; //process.env.PORT || 3301
 
@@ -100,8 +99,8 @@ app.post('/create-checkout-session', async (req, res) => {
           },
         },
         allow_promotion_codes: true,
-        success_url: `http://localhost:3301/Dashboard?success=true`,
-        cancel_url: `http://localhost:3301/Dashboard?canceled=true`,
+        success_url: `https://spatulasoftware/Dashboard?success=true`,
+        cancel_url: `https://spatulasoftware/Dashboard?canceled=true`,
       });
     }else{
       session = await stripe.checkout.sessions.create({
@@ -118,8 +117,8 @@ app.post('/create-checkout-session', async (req, res) => {
         },
         mode: 'subscription',
         allow_promotion_codes: true,
-        success_url: `http://localhost:3301/Dashboard?success=true`,
-        cancel_url: `http://localhost:3301/Dashboard?canceled=true`,
+        success_url: `https://spatulasoftware/Dashboard?success=true`,
+        cancel_url: `https://spatulasoftware/Dashboard?canceled=true`,
       });
     }
   
@@ -130,7 +129,9 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 });
 
-const endpointSecret = "whsec_01e75c99b560466824a03d596993f6fcade9fc1ed151b7f062b113aad1d6740d";
+const endpointSecret = "we_1NqfI2K2JasPd9YuNLO3ALYx";
+//whsec_MPA3UT8bGTPQuM1PiDsyQ8YDHUrrSKx0
+//"whsec_01e75c99b560466824a03d596993f6fcade9fc1ed151b7f062b113aad1d6740d"
 
 //handle webhooks
 app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
