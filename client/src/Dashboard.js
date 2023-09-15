@@ -35,11 +35,11 @@ export default function Dashboard() {
 
     const actionButton = () => {
         console.log(userSubscription);
-        if(userSubscription != "None"){
+        if(userSubscription != "None"){ //https://billing.stripe.com/p/login/test_3cscQq8bs6Gn5dS3cc
             return(
                 <div className="userButtons">
                     <button className='logOut' onClick={() => logOut()}>Log Out</button>
-                    <button onClick={() => window.open("https://billing.stripe.com/p/login/test_3cscQq8bs6Gn5dS3cc")}>Manage Plan</button>
+                    <button onClick={() => window.open("https://billing.stripe.com/p/login/8wMeVW3Bo6OlewU5kk")}>Manage Plan</button>
                 </div>
             );
         }else{
@@ -76,9 +76,9 @@ export default function Dashboard() {
     }
 
     /**
-     * Basic - price_1NjNhZK2JasPd9Yuf9mGP9Nm
-     * Standard - price_1NjNiMK2JasPd9Yu8sGt7zWM
-     * Premium - price_1NjNjDK2JasPd9YusTMvOEJ5
+     * Basic - price_1NB6BmK2JasPd9Yue4YiQAhH
+     * Standard - price_1NBnrWK2JasPd9Yu8FEcTFDx
+     * Premium - price_1NBnrrK2JasPd9YubBtmYjFJ
      */
 
     return (
@@ -129,7 +129,7 @@ export default function Dashboard() {
                                 </div>
                             </div>
                             <div className="modelButton">
-                                <a onClick={() => createCheckoutSession('price_1NB6BmK2JasPd9Yue4YiQAhH')}>Free Trial</a>
+                                <a onClick={() => createCheckoutSession('price_1NjNhZK2JasPd9Yuf9mGP9Nm')}>Free Trial</a>
                             </div>
                         </div>
                         <div className='standard'>
@@ -158,7 +158,7 @@ export default function Dashboard() {
                                 </div>
                             </div>
                             <div className="modelButton">
-                                <a onClick={() => createCheckoutSession('price_1NBnrWK2JasPd9Yu8FEcTFDx')}>Subscribe</a>
+                                <a onClick={() => createCheckoutSession('price_1NjNiMK2JasPd9Yu8sGt7zWM')}>Subscribe</a>
                             </div>
                         </div>
                         <div className='premium'>
@@ -187,7 +187,7 @@ export default function Dashboard() {
                                 </div>
                             </div>
                             <div className="modelButton">
-                                <a onClick={() => createCheckoutSession('price_1NBnrrK2JasPd9YubBtmYjFJ')}>Subscribe</a>
+                                <a onClick={() => createCheckoutSession('price_1NjNjDK2JasPd9YusTMvOEJ5')}>Subscribe</a>
                             </div>
                         </div>
                     </div>

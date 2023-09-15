@@ -3,7 +3,7 @@ const path = require('path');
 const bodyParser = require("body-parser");
 require('dotenv').config();
 var cors = require('cors');
-const stripe = require('stripe')(process.env.STRIPE_TEST_KEY);
+const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 const PORT = 3301; //process.env.PORT || 3301
 
@@ -83,7 +83,7 @@ app.post('/create-checkout-session', async (req, res) => {
     const priceId = req.query.priceId;
 
     let session;
-    if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){ //price_1NjNhZK2JasPd9Yuf9mGP9Nm
+    if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){ //price_1NB6BmK2JasPd9Yue4YiQAhH
       session = await stripe.checkout.sessions.create({
         line_items: [
           {
@@ -99,8 +99,8 @@ app.post('/create-checkout-session', async (req, res) => {
           },
         },
         allow_promotion_codes: true,
-        success_url: `https://spatulasoftware/Dashboard?success=true`,
-        cancel_url: `https://spatulasoftware/Dashboard?canceled=true`,
+        success_url: `https://spatulasoftware/Dashboard`,//?success=true
+        cancel_url: `https://spatulasoftware/Dashboard`,//?canceled=true
       });
     }else{
       session = await stripe.checkout.sessions.create({
@@ -117,8 +117,8 @@ app.post('/create-checkout-session', async (req, res) => {
         },
         mode: 'subscription',
         allow_promotion_codes: true,
-        success_url: `https://spatulasoftware/Dashboard?success=true`,
-        cancel_url: `https://spatulasoftware/Dashboard?canceled=true`,
+        success_url: `https://spatulasoftware/Dashboard`,//?success=true
+        cancel_url: `https://spatulasoftware/Dashboard`,//?canceled=true
       });
     }
   
@@ -129,7 +129,7 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 });
 
-const endpointSecret = "whsec_VSi8trlRb0lUxE4fKnAbdTNWAa1a3bTW";
+const endpointSecret = "whsec_qI9loZC6tGxiptOCno7xswL35VmDcoey";//whsec_VSi8trlRb0lUxE4fKnAbdTNWAa1a3bTW
 
 //handle webhooks
 app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
@@ -150,22 +150,22 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
         console.log('create sub');
 
         const discordId = event.data.object.metadata.discordId;
-        if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){//price_1NjNhZK2JasPd9Yuf9mGP9Nm
+        if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){//price_1NB6BmK2JasPd9Yue4YiQAhH
           await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 2, MessageAccount: null});
-        }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){//price_1NjNiMK2JasPd9Yu8sGt7zWM
+        }else if(priceId === 'price_1NjNiMK2JasPd9Yu8sGt7zWM'){//price_1NBnrWK2JasPd9Yu8FEcTFDx
           await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 5, MessageAccount: null});
-        }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){//price_1NjNjDK2JasPd9YusTMvOEJ5
+        }else if(priceId === 'price_1NjNjDK2JasPd9YusTMvOEJ5'){//price_1NBnrrK2JasPd9YubBtmYjFJ
           await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 10, MessageAccount: null});
         }
         
       }else if(type === 'customer.subscription.updated'){
         console.log("update sub tier");
 
-        if(priceId === 'price_1NB6BmK2JasPd9Yue4YiQAhH'){//price_1NjNhZK2JasPd9Yuf9mGP9Nm
+        if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){//price_1NB6BmK2JasPd9Yue4YiQAhH
           await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 2})
-        }else if(priceId === 'price_1NBnrWK2JasPd9Yu8FEcTFDx'){//price_1NjNiMK2JasPd9Yu8sGt7zWM
+        }else if(priceId === 'price_1NjNiMK2JasPd9Yu8sGt7zWM'){//price_1NBnrWK2JasPd9Yu8FEcTFDx
           await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 5})
-        }else if(priceId === 'price_1NBnrrK2JasPd9YubBtmYjFJ'){//price_1NjNjDK2JasPd9YusTMvOEJ5
+        }else if(priceId === 'price_1NjNjDK2JasPd9YusTMvOEJ5'){//price_1NBnrrK2JasPd9YubBtmYjFJ
           await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 10})
         }
       }else if(type === 'customer.subscription.deleted'){
