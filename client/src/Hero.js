@@ -92,7 +92,7 @@ export default function Hero() {
             await supabase.auth.signInWithOAuth({
                 provider: "discord", 
                 options: { 
-                  redirectTo: 'http://localhost:3301/?login' 
+                  redirectTo: 'https://spatulasoftware.com/?login' 
                 } 
             })
         }else{

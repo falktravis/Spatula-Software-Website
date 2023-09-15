@@ -72,7 +72,7 @@ export default function Dashboard() {
     const logOut = () => {
         localStorage.removeItem('userData');
 
-        window.location.href = 'http://localhost:3301/';
+        window.location.href = 'https://spatulasoftware.com/';
     }
 
     /**
