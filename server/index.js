@@ -151,11 +151,11 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
 
         const discordId = event.data.object.metadata.discordId;
         if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){//price_1NB6BmK2JasPd9Yue4YiQAhH
-          await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 2, MessageAccount: null});
+          await userDB.insertOne({UserId: discordId, StripeId: customerId, ConcurrentTasks: 2, MessageAccount: null});
         }else if(priceId === 'price_1NjNiMK2JasPd9Yu8sGt7zWM'){//price_1NBnrWK2JasPd9Yu8FEcTFDx
-          await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 5, MessageAccount: null});
+          await userDB.insertOne({UserId: discordId, StripeId: customerId, ConcurrentTasks: 5, MessageAccount: null});
         }else if(priceId === 'price_1NjNjDK2JasPd9YusTMvOEJ5'){//price_1NBnrrK2JasPd9YubBtmYjFJ
-          await userDB.insertOne({DiscordId: discordId, StripeId: customerId, ConcurrentTasks: 10, MessageAccount: null});
+          await userDB.insertOne({UserId: discordId, StripeId: customerId, ConcurrentTasks: 10, MessageAccount: null});
         }
         
       }else if(type === 'customer.subscription.updated'){
