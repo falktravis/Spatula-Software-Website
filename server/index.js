@@ -162,11 +162,11 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
         console.log("update sub tier");
 
         if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){//price_1NB6BmK2JasPd9Yue4YiQAhH
-          await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 2})
+          await userDB.updateOne({StripeId: customerId}, {$set: {ConcurrentTasks: 2}});
         }else if(priceId === 'price_1NjNiMK2JasPd9Yu8sGt7zWM'){//price_1NBnrWK2JasPd9Yu8FEcTFDx
-          await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 5})
+          await userDB.updateOne({StripeId: customerId}, {$set: {ConcurrentTasks: 5}});
         }else if(priceId === 'price_1NjNjDK2JasPd9YusTMvOEJ5'){//price_1NBnrrK2JasPd9YubBtmYjFJ
-          await userDB.updateOne({StripeId: customerId}, {ConcurrentTasks: 10})
+          await userDB.updateOne({StripeId: customerId}, {$set: {ConcurrentTasks: 10}});
         }
       }else if(type === 'customer.subscription.deleted'){
         console.log('delete sub');
