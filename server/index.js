@@ -21,27 +21,29 @@ const { ViewChannel } = PermissionFlagsBits;
 
 //create command channel
 client.on('guildMemberAdd', async (member) => {
-  console.log('member join');
-  // Get the guild/server where the member joined
-  const guild = member.guild;
-
-  // Find or create the "Commands" category
-  let category = guild.channels.cache.get("1154099395399258142");
-  if(category == null){
-    category = await guild.channels.fetch('1154099395399258142');
-  }
-  console.log(category);
-
-  // Create a private channel
-  guild.channels
-    .create({
+  try {
+    // Get the guild/server where the member joined
+    const guild = member.guild;
+  
+    // Find or create the "Commands" category
+    let category = guild.channels.cache.get("1154099395399258142");
+    if(category == null){
+      category = await guild.channels.fetch('1154099395399258142');
+    }
+  
+    // Create a private channel
+    guild.channels.create({
       name: member.user.username,
       type: ChannelType.GuildText,
       parent: category,
       permissionOverwrites: [
         {
-          id: '1079829593705422978',
+          id: guild.roles.everyone.id,
           deny: [ViewChannel]
+        },
+        {
+          id: member.user.id,
+          allow: [ViewChannel]
         },
         {
           id: '456168609639694376',
@@ -53,19 +55,9 @@ client.on('guildMemberAdd', async (member) => {
         }
       ]
     })
-    .then((channel) => {
-      // Set channel permissions
-      channel.updateOverwrite(member, {
-        VIEW_CHANNEL: true,
-      });
-      channel.updateOverwrite("456168609639694376", {
-        VIEW_CHANNEL: true,
-      });
-      channel.updateOverwrite('1078415542404251790', {
-        VIEW_CHANNEL: true,
-      });
-    })
-    .catch(console.error);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 //Database connection
