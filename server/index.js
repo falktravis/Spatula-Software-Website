@@ -17,7 +17,7 @@ const client = new Client({
   ],
 });
 client.login(process.env.DISCORD_BOT_TOKEN);
-const { viewChannel } = PermissionFlagsBits;
+const { ViewChannel } = PermissionFlagsBits;
 
 //create command channel
 client.on('guildMemberAdd', async (member) => {
@@ -41,15 +41,15 @@ client.on('guildMemberAdd', async (member) => {
       permissionOverwrites: [
         {
           id: '1079829593705422978',
-          deny: [viewChannel]
+          deny: [ViewChannel]
         },
         {
           id: '456168609639694376',
-          allow: [viewChannel]
+          allow: [ViewChannel]
         },
         {
           id: '1078415542404251790',
-          allow: [viewChannel]
+          allow: [ViewChannel]
         }
       ]
     })
