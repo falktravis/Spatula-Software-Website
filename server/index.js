@@ -19,6 +19,7 @@ client.login(process.env.DISCORD_BOT_TOKEN);
 
 //create command channel
 client.on('guildMemberAdd', async (member) => {
+  console.log('member join');
   // Get the guild/server where the member joined
   const guild = member.guild;
 
