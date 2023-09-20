@@ -8,7 +8,7 @@ const stripe = require('stripe')(process.env.STRIPE_KEY);
 const PORT = 3301; //process.env.PORT || 3301
 
 //discord.js set up
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, ChannelType } = require('discord.js');
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -35,7 +35,7 @@ client.on('guildMemberAdd', async (member) => {
   guild.channels
     .create({
       name: member.user.username,
-      type: 'text',
+      type: ChannelType.GuildText,
       parent: category,
     })
     .then((channel) => {
