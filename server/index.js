@@ -8,7 +8,7 @@ const stripe = require('stripe')(process.env.STRIPE_KEY);
 const PORT = 3301; //process.env.PORT || 3301
 
 //discord.js set up
-const { Client, GatewayIntentBits, ChannelType } = require('discord.js');
+const { Client, GatewayIntentBits, ChannelType, PermissionFlagsBits } = require('discord.js');
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -17,6 +17,7 @@ const client = new Client({
   ],
 });
 client.login(process.env.DISCORD_BOT_TOKEN);
+const { viewChannel } = PermissionFlagsBits;
 
 //create command channel
 client.on('guildMemberAdd', async (member) => {
@@ -37,6 +38,20 @@ client.on('guildMemberAdd', async (member) => {
       name: member.user.username,
       type: ChannelType.GuildText,
       parent: category,
+      permissionOverwrites: [
+        {
+          id: '1079829593705422978',
+          deny: [viewChannel]
+        },
+        {
+          id: '456168609639694376',
+          allow: [viewChannel]
+        },
+        {
+          id: '1078415542404251790',
+          allow: [viewChannel]
+        }
+      ]
     })
     .then((channel) => {
       // Set channel permissions
