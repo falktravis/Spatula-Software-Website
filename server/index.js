@@ -25,14 +25,15 @@ client.on('guildMemberAdd', async (member) => {
   const guild = member.guild;
 
   // Find or create the "Commands" category
-  let category = guild.channels.cache.find(
-    (channel) => channel.type === 'category' && channel.name === 'COMMANDS'
-  );
+  let category = guild.channels.cache.get("1154099395399258142");
+  if(category == null){
+    category = await guild.channels.fetch('1154099395399258142');
+  }
   console.log(category);
 
   // Create a private channel
   guild.channels
-    .create(member.user.username, {
+    .create(`${member.user.username}test`, {
       type: 'text',
       parent: category,
     })
