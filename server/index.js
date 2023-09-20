@@ -8,7 +8,7 @@ const stripe = require('stripe')(process.env.STRIPE_KEY);
 const PORT = 3301; //process.env.PORT || 3301
 
 //discord.js set up
-/*const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -16,7 +16,38 @@ const client = new Client({
   ],
 });
 client.login(process.env.DISCORD_BOT_TOKEN);
-console.log(process.env.DISCORD_BOT_TOKEN);*/ //!testing
+
+//create command channel
+client.on('guildMemberAdd', async (member) => {
+  // Get the guild/server where the member joined
+  const guild = member.guild;
+
+  // Find or create the "Commands" category
+  let category = guild.channels.cache.find(
+    (channel) => channel.type === 'category' && channel.name === 'COMMANDS'
+  );
+  console.log(category);
+
+  // Create a private channel
+  guild.channels
+    .create(member.user.username, {
+      type: 'text',
+      parent: category,
+    })
+    .then((channel) => {
+      // Set channel permissions
+      channel.updateOverwrite(member, {
+        VIEW_CHANNEL: true,
+      });
+      channel.updateOverwrite("456168609639694376", {
+        VIEW_CHANNEL: true,
+      });
+      channel.updateOverwrite('1078415542404251790', {
+        VIEW_CHANNEL: true,
+      });
+    })
+    .catch(console.error);
+});
 
 //Database connection
 const { MongoClient, ServerApiVersion } = require('mongodb');
