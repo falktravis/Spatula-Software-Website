@@ -31,9 +31,11 @@ client.on('guildMemberAdd', async (member) => {
   }
   console.log(category);
 
+  console.log(member.user.username);
+
   // Create a private channel
   guild.channels
-    .create(`${member.user.username}test`, {
+    .create('test', {
       type: 'text',
       parent: category,
     })
