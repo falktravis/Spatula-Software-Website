@@ -30,6 +30,9 @@ client.on('guildMemberAdd', async (member) => {
     if(category == null){
       category = await guild.channels.fetch('1154099395399258142');
     }
+
+    console.log(guild.roles.everyone.id);
+    console.log(member.user.id);
   
     // Create a private channel
     guild.channels.create({
@@ -46,11 +49,7 @@ client.on('guildMemberAdd', async (member) => {
           allow: [ViewChannel]
         },
         {
-          id: '456168609639694376',
-          allow: [ViewChannel]
-        },
-        {
-          id: '1078415542404251790',
+          id: '1154107647197458596',
           allow: [ViewChannel]
         }
       ]
