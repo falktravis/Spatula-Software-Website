@@ -12,33 +12,54 @@ const { Client, GatewayIntentBits, ChannelType, PermissionFlagsBits } = require(
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.DirectMessages
+    GatewayIntentBits.GuildMembers
   ],
 });
 client.login(process.env.DISCORD_BOT_TOKEN);
 const { ViewChannel } = PermissionFlagsBits;
 
-//create command channel
-client.on('guildMemberAdd', async (member) => {
+let guild;
+let commandsCategory;
+let welcomeChannel;
+client.on('ready', async () => {
   try {
-    // Get the guild/server where the member joined
-    const guild = member.guild;
-  
-    // Find or create the "Commands" category
-    let category = guild.channels.cache.get("1154099395399258142");
-    if(category == null){
-      category = await guild.channels.fetch('1154099395399258142');
+    guild = await client.guilds.fetch('1079829593705422978');
+
+    welcomeChannel = guild.channels.cache.get("1086899588545392712");
+    if(welcomeChannel == null){
+      welcomeChannel = await guild.channels.fetch('1086899588545392712');
     }
 
-    console.log(guild.roles.everyone.id);
-    console.log(member.user.id);
+    commandsCategory = guild.channels.cache.get("1154099395399258142");
+    if(commandsCategory == null){
+      commandsCategory = await guild.channels.fetch('1154099395399258142');
+    }
+
+    /*//TODO: Send the invite link in the success page or maybe the dashboard. We can't dm.
+    const invite = await welcomeChannel.createInvite({
+      maxAge: 0,
+      maxUses: 1,
+    });
+    console.log(invite.url);
+    const user = await client.users.fetch('545339744868106270');
+    await user.send(`Welcome to Spatula Software!\n\n${invite.url}`);
+    */    
+  } catch (error) {
+    console.log(error);
+  }
+})
+
+//create command channel
+client.on('guildMemberAdd', async (member) => {
+  try {  
+    //TODO: Assign a role based on subscription
+
   
-    // Create a private channel
+    //Create a private channel
     guild.channels.create({
       name: member.user.username,
       type: ChannelType.GuildText,
-      parent: category,
+      parent: commandsCategory,
       permissionOverwrites: [
         {
           id: guild.roles.everyone.id,
@@ -189,8 +210,8 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
 
       if(type === 'customer.subscription.created'){
         console.log('create sub');
-
         const discordId = event.data.object.metadata.discordId;
+
         if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){//price_1NB6BmK2JasPd9Yue4YiQAhH
           await userDB.insertOne({UserId: discordId, StripeId: customerId, ConcurrentTasks: 2, MessageAccount: null});
         }else if(priceId === 'price_1NjNiMK2JasPd9Yu8sGt7zWM'){//price_1NBnrWK2JasPd9Yu8FEcTFDx
@@ -211,8 +232,18 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
         }
       }else if(type === 'customer.subscription.deleted'){
         console.log('delete sub');
+        
+        //get db obj for the discord id
+        const userObj = userDB.findOne({StripeId: customerId});
+
         //delete database user
         await userDB.deleteOne({StripeId: customerId});
+
+        //remove the user from discord server
+        const user = await client.users.fetch(userObj.UserId);
+        await guild.members.kick(user);
+
+        //TODO: delete private channel
       }
     }
     // Return a 200 response to acknowledge receipt of the event

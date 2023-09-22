@@ -4,6 +4,10 @@ import Hero from './Hero.js';
 import Dashboard from './Dashboard.js'
 import './styles/main.scss';
 
+//google analytics
+import ReactGA from 'react-ga4';
+ReactGA.initialize('G-7SBLJGWC9F');
+
 function App(){
     return (
         <Router>
