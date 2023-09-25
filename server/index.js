@@ -16,69 +16,7 @@ const client = new Client({
   ],
 });
 client.login(process.env.DISCORD_BOT_TOKEN);
-const { ViewChannel } = PermissionFlagsBits;
-
-let guild;
-let commandsCategory;
-let welcomeChannel;
-client.on('ready', async () => {
-  try {
-    guild = await client.guilds.fetch('1079829593705422978');
-
-    welcomeChannel = guild.channels.cache.get("1086899588545392712");
-    if(welcomeChannel == null){
-      welcomeChannel = await guild.channels.fetch('1086899588545392712');
-    }
-
-    commandsCategory = guild.channels.cache.get("1154099395399258142");
-    if(commandsCategory == null){
-      commandsCategory = await guild.channels.fetch('1154099395399258142');
-    }
-
-    /*//TODO: Send the invite link in the success page or maybe the dashboard. We can't dm.
-    const invite = await welcomeChannel.createInvite({
-      maxAge: 0,
-      maxUses: 1,
-    });
-    console.log(invite.url);
-    const user = await client.users.fetch('545339744868106270');
-    await user.send(`Welcome to Spatula Software!\n\n${invite.url}`);
-    */    
-  } catch (error) {
-    console.log(error);
-  }
-})
-
-//create command channel
-client.on('guildMemberAdd', async (member) => {
-  try {  
-    //TODO: Assign a role based on subscription
-
-  
-    //Create a private channel
-    guild.channels.create({
-      name: member.user.username,
-      type: ChannelType.GuildText,
-      parent: commandsCategory,
-      permissionOverwrites: [
-        {
-          id: guild.roles.everyone.id,
-          deny: [ViewChannel]
-        },
-        {
-          id: member.user.id,
-          allow: [ViewChannel]
-        },
-        {
-          id: '1154107647197458596',
-          allow: [ViewChannel]
-        }
-      ]
-    })
-  } catch (error) {
-    console.log(error);
-  }
-});
+const { ViewChannel, UseApplicationCommands } = PermissionFlagsBits;
 
 //Database connection
 const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -102,6 +40,66 @@ let userDB;
         console.log("Mongo Connection " + error);
     }
 })();
+
+let guild;
+let commandsCategory;
+let welcomeChannel;
+client.on('ready', async () => {
+  try {
+    guild = await client.guilds.fetch('1079829593705422978');
+
+    welcomeChannel = guild.channels.cache.get("1086899588545392712");
+    if(welcomeChannel == null){
+      welcomeChannel = await guild.channels.fetch('1086899588545392712');
+    }
+
+    commandsCategory = guild.channels.cache.get("1154099395399258142");
+    if(commandsCategory == null){
+      commandsCategory = await guild.channels.fetch('1154099395399258142');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+})
+
+//create command channel
+client.on('guildMemberAdd', async (member) => {
+  try {  
+    const userObj = await userDB.findOne({UserId: member.user.id});
+    if(userObj != null){
+      if(userObj.ConcurrentTasks == 2){
+        member.roles.add('1154922101808042094');
+      }else if(userObj.ConcurrentTasks == 5){
+        member.roles.add('1154921995943813160');
+      }else if(userObj.ConcurrentTasks == 10){
+        member.roles.add('1154921822576459806');
+      }
+
+      //create private channel in discord
+      guild.channels.create({
+        name: member.user.username,
+        type: ChannelType.GuildText,
+        parent: commandsCategory,
+        permissionOverwrites: [
+          {
+            id: guild.roles.everyone.id,
+            deny: [ViewChannel]
+          },
+          {
+            id: member.user.id,
+            allow: [ViewChannel, UseApplicationCommands]
+          },
+          {
+            id: '1154107647197458596',
+            allow: [ViewChannel]
+          }
+        ]
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 const app = express();
 
@@ -212,6 +210,38 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
         console.log('create sub');
         const discordId = event.data.object.metadata.discordId;
 
+        //if user is in the guild already
+        const member = await guild.members.fetch(discordId);
+        if(member){
+          if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){
+            await member.roles.add('1154922101808042094');
+          }else if(priceId === 'price_1NjNiMK2JasPd9Yu8sGt7zWM'){
+            await member.roles.add('1154921995943813160');
+          }else if(priceId === 'price_1NjNjDK2JasPd9YusTMvOEJ5'){
+            await member.roles.add('1154921822576459806');
+          }
+
+          guild.channels.create({
+            name: member.user.username,
+            type: ChannelType.GuildText,
+            parent: commandsCategory,
+            permissionOverwrites: [
+              {
+                id: guild.roles.everyone.id,
+                deny: [ViewChannel]
+              },
+              {
+                id: member.user.id,
+                allow: [ViewChannel]
+              },
+              {
+                id: '1154107647197458596',
+                allow: [ViewChannel]
+              }
+            ]
+          });
+        }
+
         if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){//price_1NB6BmK2JasPd9Yue4YiQAhH
           await userDB.insertOne({UserId: discordId, StripeId: customerId, ConcurrentTasks: 2, MessageAccount: null});
         }else if(priceId === 'price_1NjNiMK2JasPd9Yu8sGt7zWM'){//price_1NBnrWK2JasPd9Yu8FEcTFDx
@@ -244,6 +274,7 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
         await guild.members.kick(user);
 
         //TODO: delete private channel
+        
       }
     }
     // Return a 200 response to acknowledge receipt of the event

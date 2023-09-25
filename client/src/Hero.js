@@ -121,10 +121,18 @@ export default function Hero() {
                         </Typed>
                     </h2>
                     <p>Get notifications about new posts and automatically message the owner.</p>
-                    <a onClick={handleDashboardClick}><span>Free Trial</span></a>
+                    <a id='trial' onClick={handleDashboardClick}><span>Free Trial</span></a>
                 </div>
                 <img src={heroImg} alt="Iphone and Computer Software Example" className='heroImg' />
                 <img src={wavesImg1} alt="Wave Image" className='waves1' />
+                <div className="discord1">
+                    <p>Join the discord to see how the service works, and how our members are making huge profits flipping items!</p>
+                    <a href='https://discord.gg/8e6vGhfbR7'>Discord Access</a>
+                </div>
+                <div className="discord2">
+                    <p>Want to see how the service works and how our members make huge profits?</p>
+                    <a href='https://discord.gg/8e6vGhfbR7'>Join the Discord</a>
+                </div>
             </div>
             <div className="landingPageContent">
                 <h2>How Does it Work?</h2>

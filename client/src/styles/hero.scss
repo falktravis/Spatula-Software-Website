@@ -2,12 +2,13 @@
 
 .heroPage{
     width: 100%;
+    position: relative;
     
     .hero{
         width: 100%;
         height: calc(100vh - 80px);
         position: relative;
-        overflow: hidden;
+        overflow: visible !important;
 
         .notifications{
             position: absolute;
@@ -47,15 +48,17 @@
             }
             @media (max-width: 850px){
                 height: 95%;
-                bottom: 0;
             }
-            @media (max-width: 600px){
-                left: 25%;
+            @media (max-width: 700px){
+                left: 45%;
                 height: 70%;
                 max-width: none;
+                bottom: 5vh;
             }
             @media (max-width: 450px){
                 left: 20%;
+                max-width: none;
+                bottom: 10%;
             }
             @media (max-width: 375px){
                 left: 15%;
@@ -82,6 +85,9 @@
             }
             @media (max-width: 600px){
                 width: 85%;
+            }
+            @media (max-width: 450px){
+                padding-top: 0;
             }
 
             h2{
@@ -156,6 +162,9 @@
                     line-height: 40px;
                     margin-top: 3vh;
                 }
+                @media (max-width: 450px) {
+                    margin-top: 1vh;
+                }
                 
                 span{
                     position: relative;
@@ -183,6 +192,155 @@
                 }
             }
         }
+
+        .discord1{
+            width: 60%;
+            display: flex;
+            position: absolute;
+            bottom: 3vh;
+            background-color: white;
+            border-radius: 40px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            margin: 0 20%;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+
+            @media (max-width: 1250px) {
+                width: 70%;
+                margin: 0 15%;
+            }
+            @media (max-width: 1000px) {
+                width: 85%;
+                margin: 0 7.5%;
+            }
+            @media (max-width: 800px) {
+                width: 90%;
+                margin: 0 5%;
+            }
+            @media (max-width: 520px) {
+                visibility: hidden;
+            }
+    
+            p{
+                width: 70%;
+                padding: 2.5vh 2vw;
+                font-size: calc(14px + 0.390625vw);
+                font-family: Roboto;
+                
+                @media (max-width: 800px) {
+                    font-size: calc(12px + 0.390625vw);    
+                }
+                @media (max-width: 620px) {
+                    font-size: calc(10px + 0.390625vw);    
+                }
+            }
+    
+            a{
+                width: 25%;
+                padding: 2vh;
+                margin: 1vh;
+                margin-right: 2vw;
+                text-decoration: none;
+                font-family: Montserrat;
+                display: block;
+                color: white;
+                background-color: #0092FF;
+                border-radius: 20px;
+                font-size: calc(14px + 0.390625vw);
+                font-weight: 600;
+                transition: 200ms;
+                text-align: center;
+
+                @media (max-width: 800px) {
+                    font-size: calc(12px + 0.390625vw);    
+                }
+                @media (max-width: 620px) {
+                    font-size: calc(10px + 0.390625vw);    
+                }
+    
+                &:hover{
+                    transform: scale(103%);
+                    box-shadow: #0092FF 0px 5px 15px;
+                }
+            }
+    
+            transition: 250ms;
+            &:hover{
+                transform: scale(105%);
+                transform: translateY(-1vh);
+            }
+        }
+
+        .discord2{
+            visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: absolute;
+            bottom: 3vh;
+            background-color: white;
+            border-radius: 40px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            z-index: 2;
+            width: 95%;
+            margin: 0 2.5%;
+
+            @media (max-width: 420px) {
+                flex-direction: column; 
+                bottom: 1.5vh;
+            }
+
+            a{
+                width: 40%;
+                padding: 2vh;
+                margin: 1vh;
+                text-decoration: none;
+                font-family: Montserrat;
+                display: block;
+                color: white;
+                background-color: #0092FF;
+                border-radius: 20px;
+                font-size: calc(14px + 0.390625vw);
+                font-weight: 600;
+                transition: 200ms;
+                text-align: center;
+
+                @media (max-width: 420px) {
+                    width: 80%;
+                    font-size: calc(17px + 0.390625vw);    
+                    margin-bottom: 2vh;
+                    padding: 1.5vh;
+                    margin-top: .5vh;
+                }
+            }
+
+            p{
+                width: 60%;
+                padding: 1.5vh 2vw;
+                font-size: calc(14px + 0.390625vw);
+                font-family: Roboto;
+                
+                @media (max-width: 800px) {
+                    font-size: calc(12px + 0.390625vw);    
+                }
+                @media (max-width: 620px) {
+                    font-size: calc(10px + 0.390625vw);    
+                }
+                @media (max-width: 420px) {
+                    font-size: calc(15px + 0.390625vw); 
+                    width: 85%;
+                    padding-bottom: 1vh;
+                }
+                @media (max-width: 350px) {
+                    font-size: calc(13px + 0.390625vw); 
+                }
+            }
+
+            @media (max-width: 520px) {
+                visibility: visible;
+            }
+        }
     }
 
     .landingPageContent{
@@ -198,7 +356,8 @@
             font-weight: 600;
             color: white;
             text-align: center;
-            padding: 2vh 0;
+            padding-top: 4vh;
+            padding-bottom: 2vh;
 
             @media (max-width: 800px){
                 font-size: calc(30px + 0.390625vw);
