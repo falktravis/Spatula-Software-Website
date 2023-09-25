@@ -127,11 +127,11 @@ export default function Hero() {
                 <img src={wavesImg1} alt="Wave Image" className='waves1' />
                 <div className="discord1">
                     <p>Join the discord to see how the service works, and how our members are making huge profits flipping items!</p>
-                    <a href='https://discord.gg/8e6vGhfbR7'>Discord Access</a>
+                    <a href='https://discord.gg/8e6vGhfbR7' target='_blank'>Discord Access</a>
                 </div>
                 <div className="discord2">
                     <p>Want to see how the service works and how our members make huge profits?</p>
-                    <a href='https://discord.gg/8e6vGhfbR7'>Join the Discord</a>
+                    <a href='https://discord.gg/8e6vGhfbR7' target='_blank'>Join the Discord</a>
                 </div>
             </div>
             <div className="landingPageContent">
