@@ -92,7 +92,7 @@
 
             h2{
                 font-size: 3.3vw;
-                font-family: Plus Jakarta Sans;
+                font-family: Plus Jakarta Sans, Roboto;
 
                 @media (max-width: 1200px){
                     font-size: 3.8vw;
@@ -395,6 +395,7 @@
                 font-weight: 600;
                 background-color: transparent;
                 transition: 200ms;
+                color: black;
 
                 @media (max-width: 1300px){
                     font-size: calc(12px + 0.390625vw);
