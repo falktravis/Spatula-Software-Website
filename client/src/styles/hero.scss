@@ -92,7 +92,11 @@
 
             h2{
                 font-size: 3.3vw;
-                font-family: Arial, Plus Jakarta Sans, 'Roboto', sans-serif;
+                font-family: Plus Jakarta Sans, 'Roboto', sans-serif;
+
+                @media (pointer:none), (pointer:coarse) {
+                    font-family: Arial;
+                }
 
                 @media (max-width: 1200px){
                     font-size: 3.8vw;
