@@ -206,6 +206,14 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
       const customerId = event.data.object.customer; // ID of the customer
       const priceId = event.data.object.items.data[0].price.id; //priceId of the 
 
+      if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){//price_1NB6BmK2JasPd9Yue4YiQAhH
+        await userDB.insertOne({UserId: discordId, StripeId: customerId, ConcurrentTasks: 2, MessageAccount: null});
+      }else if(priceId === 'price_1NjNiMK2JasPd9Yu8sGt7zWM'){//price_1NBnrWK2JasPd9Yu8FEcTFDx
+        await userDB.insertOne({UserId: discordId, StripeId: customerId, ConcurrentTasks: 5, MessageAccount: null});
+      }else if(priceId === 'price_1NjNjDK2JasPd9YusTMvOEJ5'){//price_1NBnrrK2JasPd9YubBtmYjFJ
+        await userDB.insertOne({UserId: discordId, StripeId: customerId, ConcurrentTasks: 10, MessageAccount: null});
+      }
+
       if(type === 'customer.subscription.created'){
         console.log('create sub');
         const discordId = event.data.object.metadata.discordId;
@@ -213,14 +221,6 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
         //if user is in the guild already
         const member = await guild.members.fetch(discordId);
         if(member){
-          if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){
-            await member.roles.add('1154922101808042094');
-          }else if(priceId === 'price_1NjNiMK2JasPd9Yu8sGt7zWM'){
-            await member.roles.add('1154921995943813160');
-          }else if(priceId === 'price_1NjNjDK2JasPd9YusTMvOEJ5'){
-            await member.roles.add('1154921822576459806');
-          }
-
           guild.channels.create({
             name: member.user.username,
             type: ChannelType.GuildText,
@@ -240,16 +240,15 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
               }
             ]
           });
-        }
 
-        if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){//price_1NB6BmK2JasPd9Yue4YiQAhH
-          await userDB.insertOne({UserId: discordId, StripeId: customerId, ConcurrentTasks: 2, MessageAccount: null});
-        }else if(priceId === 'price_1NjNiMK2JasPd9Yu8sGt7zWM'){//price_1NBnrWK2JasPd9Yu8FEcTFDx
-          await userDB.insertOne({UserId: discordId, StripeId: customerId, ConcurrentTasks: 5, MessageAccount: null});
-        }else if(priceId === 'price_1NjNjDK2JasPd9YusTMvOEJ5'){//price_1NBnrrK2JasPd9YubBtmYjFJ
-          await userDB.insertOne({UserId: discordId, StripeId: customerId, ConcurrentTasks: 10, MessageAccount: null});
+          if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){
+            await member.roles.add('1154922101808042094');
+          }else if(priceId === 'price_1NjNiMK2JasPd9Yu8sGt7zWM'){
+            await member.roles.add('1154921995943813160');
+          }else if(priceId === 'price_1NjNjDK2JasPd9YusTMvOEJ5'){
+            await member.roles.add('1154921822576459806');
+          }
         }
-        
       }else if(type === 'customer.subscription.updated'){
         console.log("update sub tier");
 
