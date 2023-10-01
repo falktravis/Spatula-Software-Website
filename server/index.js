@@ -159,8 +159,8 @@ app.post('/create-checkout-session', async (req, res) => {
           },
         },
         allow_promotion_codes: true,
-        success_url: `https://spatulasoftware/Dashboard`,//?success=true
-        cancel_url: `https://spatulasoftware/Dashboard`,//?canceled=true
+        success_url: `https://spatulasoftware.com/Success`,
+        cancel_url: `https://spatulasoftware.com/Dashboard`,
       });
     }else{
       session = await stripe.checkout.sessions.create({
@@ -177,8 +177,8 @@ app.post('/create-checkout-session', async (req, res) => {
         },
         mode: 'subscription',
         allow_promotion_codes: true,
-        success_url: `https://spatulasoftware/Dashboard`,//?success=true
-        cancel_url: `https://spatulasoftware/Dashboard`,//?canceled=true
+        success_url: `https://spatulasoftware.com/Success`,
+        cancel_url: `https://spatulasoftware.com/Dashboard`,
       });
     }
   

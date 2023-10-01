@@ -22,7 +22,7 @@ export default function Hero() {
             <div className="landingContentDisplay">
                 <div className="tasks">
                     <h4>Use Discord commands to create tasks from anywhere that will notify you about Facebook Marketplace posts, each task will monitor a different product.</h4>
-                    <img src={commandsImg} alt="Commands Image" />
+                    <img loading="lazy" src={commandsImg} alt="Commands Image" />
                 </div>
             </div>
         );
@@ -33,7 +33,7 @@ export default function Hero() {
         return(
             <div className="landingContentDisplay">
                 <div className="notifications">
-                    <img src={notification3} alt="Screenshot of notification" />
+                    <img loading="lazy" src={notification3} alt="Screenshot of notification" />
                     <div className="textContent">
                         <h4>Get notifications on your phone and computer, when an item is listed.</h4>
                         <p>Notifications will display all the info about the item including, title, price, location, and description</p>
@@ -49,8 +49,8 @@ export default function Hero() {
             <div className="landingContentDisplay">
                 <div className="messaging">
                     <div className="imgContainer">
-                        <img className="img1" src={notification1} alt="Screenshot of notification with message button" />
-                        <img src={notification4} alt="Screenshot of notification with message sent" />
+                        <img loading="lazy" className="img1" src={notification1} alt="Screenshot of notification with message button" />
+                        <img loading="lazy" src={notification4} alt="Screenshot of notification with message sent" />
                     </div>
                     <h4>Automatically message Facebook users about their post, or message with just a single click.</h4>
                 </div>
@@ -103,13 +103,13 @@ export default function Hero() {
     //                <img src={heroImg} alt="Collage of post notifications" className='notifications' />
     return (
         <div className="heroPage">
-            <div className="NavBar">
-                <h1>Spatula Software</h1>
+            <nav className="NavBar">
+                <h1><a href='/'>Spatula Software</a></h1>
                 <ul>
-                    <li onClick={pricingScroll}>Pricing</li>
+                    <li><a onClick={pricingScroll}>Pricing</a></li>
                     <li><a onClick={handleDashboardClick}>Dashboard</a></li>
                 </ul>
-            </div>
+            </nav>
             <div className="hero">
                 <div className="heroContent">
                     <h2>The Only Professional Tool For <Typed
@@ -143,8 +143,8 @@ export default function Hero() {
                 </div>
                 {landingContentDisplay}
             </div>
-            <img src={wavesImg2} alt="Wave Image" className='waves2' />
-            <div ref={pricing} className='Pricing'>
+            <img loading="lazy" src={wavesImg2} alt="Wave Image" className='waves2' />
+            <div ref={pricing} className='Pricing' id='pricing'>
                 <div className='pricingCards'>
                     <div className='basic'>
                         <div className="pricingModel">
@@ -155,19 +155,19 @@ export default function Hero() {
                         </div>
                         <div className="modelContent">
                             <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
+                                <img loading="lazy" src={checkIcon} alt="check" />
                                 <p>2 Concurrent Tasks</p>
                             </div>
                             <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
+                                <img loading="lazy" src={checkIcon} alt="check" />
                                 <p>Facebook Notifications</p>
                             </div>
                             <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
+                                <img loading="lazy" src={checkIcon} alt="check" />
                                 <p>Facebook One-Click Messaging</p>
                             </div>
                             <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
+                                <img loading="lazy" src={checkIcon} alt="check" />
                                 <p>Facebook Auto Messaging</p>
                             </div>
                         </div>
@@ -184,19 +184,19 @@ export default function Hero() {
                         </div>
                         <div className="modelContent">
                             <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
+                                <img loading="lazy" src={checkIcon} alt="check" />
                                 <p>5 Concurrent Tasks</p>
                             </div>
                             <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
+                                <img loading="lazy" src={checkIcon} alt="check" />
                                 <p>Facebook Notifications</p>
                             </div>
                             <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
+                                <img loading="lazy" src={checkIcon} alt="check" />
                                 <p>Facebook One-Click Messaging</p>
                             </div>
                             <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
+                                <img loading="lazy" src={checkIcon} alt="check" />
                                 <p>Facebook Auto Messaging</p>
                             </div>
                         </div>
@@ -213,19 +213,19 @@ export default function Hero() {
                         </div>
                         <div className="modelContent">
                             <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
+                                <img loading="lazy" src={checkIcon} alt="check" />
                                 <p>10 Concurrent Tasks</p>
                             </div>
                             <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
+                                <img loading="lazy" src={checkIcon} alt="check" />
                                 <p>Facebook Notifications</p>
                             </div>
                             <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
+                                <img loading="lazy" src={checkIcon} alt="check" />
                                 <p>Facebook One-Click Messaging</p>
                             </div>
                             <div className="modelAspect">
-                                <img src={checkIcon} alt="check" />
+                                <img loading="lazy" src={checkIcon} alt="check" />
                                 <p>Facebook Auto Messaging</p>
                             </div>
                         </div>

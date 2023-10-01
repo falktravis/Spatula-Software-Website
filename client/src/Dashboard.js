@@ -83,13 +83,13 @@ export default function Dashboard() {
 
     return (
         <div className="dashboard">
-            <div className="NavBar">
+            <nav className="NavBar">
                 <h1><a href='/'>Spatula Software</a></h1>
                 <ul>
-                    <li>Pricing</li>
-                    <li><a>Dashboard</a></li>
+                    <li><a href="/">Pricing</a></li>
+                    <li><a href='/Dashboard'>Dashboard</a></li>
                 </ul>
-            </div>
+            </nav>
             <div className='dashboardDisplay'>
                 <div className='userDisplay'>
                     <img id='userPicture' src={userData.avatar_url} />

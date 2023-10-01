@@ -1,0 +1,14 @@
+@import 'main';
+
+footer{
+    height: 4vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p{
+        font-family: Plus Jakarta Sans;
+        font-size: calc(12px + 0.390625vw);
+    }
+}
