@@ -270,7 +270,7 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
 
         //remove the user from discord server
         const user = await client.users.fetch(userObj.UserId);
-        await guild.members.kick(user);
+        //!await guild.members.kick(user);
 
         //TODO: delete private channel
         
