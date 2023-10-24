@@ -7,17 +7,6 @@ const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 const PORT = 3301; //process.env.PORT || 3301
 
-//discord.js set up
-const { Client, GatewayIntentBits, ChannelType, PermissionFlagsBits } = require('discord.js');
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMembers
-  ],
-});
-client.login(process.env.DISCORD_BOT_TOKEN);
-const { ViewChannel, UseApplicationCommands } = PermissionFlagsBits;
-
 //Database connection
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://SpatulaSoftware:jpTANtS4n59oqlam@spatula-software.tyas5mn.mongodb.net/?retryWrites=true&w=majority";
@@ -40,6 +29,17 @@ let userDB;
         console.log("Mongo Connection " + error);
     }
 })();
+
+//discord.js set up
+/*const { Client, GatewayIntentBits, ChannelType, PermissionFlagsBits } = require('discord.js');
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers
+  ],
+});
+client.login(process.env.DISCORD_BOT_TOKEN);
+const { ViewChannel, UseApplicationCommands } = PermissionFlagsBits;
 
 let guild;
 let commandsCategory;
@@ -101,97 +101,8 @@ client.on('guildMemberAdd', async (member) => {
   }
 });
 
-const app = express();
-
-// Custom middleware to save the raw request body for webhooks
-app.use((request, response, next) => {
-  request.rawBody = '';
-  request.on('data', (chunk) => {
-    request.rawBody += chunk;
-  });
-  next();
-});
-
-//general middleware
-app.use(express.static('public'));
-app.use(cors());
-app.use(bodyParser.json());
-app.use(express.static(path.resolve(__dirname, '../client/dist')));
-
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
-
-app.get('/user-data', async (req, res) => {
-  try {
-    const { userId } = req.query;
-
-    // Retrieve data from MongoDB
-    const data = await userDB.findOne({UserId: userId});
-
-    res.json(data); // Send the retrieved data as a JSON response
-  } catch (error) {
-    // Handle error
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-app.post('/create-checkout-session', async (req, res) => {
-  try {
-    const discordId = req.query.discordId;
-    const priceId = req.query.priceId;
-
-    let session;
-    if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){ //price_1NB6BmK2JasPd9Yue4YiQAhH
-      session = await stripe.checkout.sessions.create({
-        line_items: [
-          {
-            price: priceId,
-            quantity: 1,
-          },
-        ],
-        mode: 'subscription',
-        subscription_data: {
-          trial_period_days: 3,
-          metadata: {
-            discordId: discordId,
-          },
-        },
-        allow_promotion_codes: true,
-        success_url: `https://spatulasoftware.com/Success`,
-        cancel_url: `https://spatulasoftware.com/Dashboard`,
-      });
-    }else{
-      session = await stripe.checkout.sessions.create({
-        line_items: [
-          {
-            price: priceId,
-            quantity: 1,
-          },
-        ],
-        subscription_data: {
-          metadata: {
-            discordId: discordId,
-          },
-        },
-        mode: 'subscription',
-        allow_promotion_codes: true,
-        success_url: `https://spatulasoftware.com/Success`,
-        cancel_url: `https://spatulasoftware.com/Dashboard`,
-      });
-    }
-  
-    res.json({ url: session.url });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).send('An error occurred while creating the Checkout Session.');
-  }
-});
-
-const endpointSecret = "whsec_qI9loZC6tGxiptOCno7xswL35VmDcoey";//whsec_VSi8trlRb0lUxE4fKnAbdTNWAa1a3bTW
-
 //handle webhooks
+const endpointSecret = "whsec_qI9loZC6tGxiptOCno7xswL35VmDcoey";//whsec_VSi8trlRb0lUxE4fKnAbdTNWAa1a3bTW
 app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
   try {
     //initiate the event
@@ -282,6 +193,94 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
     console.log('error: ' + err);
     response.status(400).send(`Webhook Error: ${err.message}`);
     return;
+  }
+});*/
+
+const app = express();
+
+// Custom middleware to save the raw request body for webhooks
+app.use((request, response, next) => {
+  request.rawBody = '';
+  request.on('data', (chunk) => {
+    request.rawBody += chunk;
+  });
+  next();
+});
+
+//general middleware
+app.use(express.static('public'));
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static(path.resolve(__dirname, '../client/dist')));
+
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
+});
+
+app.get('/user-data', async (req, res) => {
+  try {
+    const { userId } = req.query;
+
+    // Retrieve data from MongoDB
+    const data = await userDB.findOne({UserId: userId});
+
+    res.json(data); // Send the retrieved data as a JSON response
+  } catch (error) {
+    // Handle error
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/create-checkout-session', async (req, res) => {
+  try {
+    const discordId = req.query.discordId;
+    const priceId = req.query.priceId;
+
+    let session;
+    if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){ //price_1NB6BmK2JasPd9Yue4YiQAhH
+      session = await stripe.checkout.sessions.create({
+        line_items: [
+          {
+            price: priceId,
+            quantity: 1,
+          },
+        ],
+        mode: 'subscription',
+        subscription_data: {
+          trial_period_days: 3,
+          metadata: {
+            discordId: discordId,
+          },
+        },
+        allow_promotion_codes: true,
+        success_url: `https://spatulasoftware.com/Success`,
+        cancel_url: `https://spatulasoftware.com/Dashboard`,
+      });
+    }else{
+      session = await stripe.checkout.sessions.create({
+        line_items: [
+          {
+            price: priceId,
+            quantity: 1,
+          },
+        ],
+        subscription_data: {
+          metadata: {
+            discordId: discordId,
+          },
+        },
+        mode: 'subscription',
+        allow_promotion_codes: true,
+        success_url: `https://spatulasoftware.com/Success`,
+        cancel_url: `https://spatulasoftware.com/Dashboard`,
+      });
+    }
+  
+    res.json({ url: session.url });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('An error occurred while creating the Checkout Session.');
   }
 });
 
