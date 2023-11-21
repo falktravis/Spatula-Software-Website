@@ -1,11 +1,11 @@
 const express = require("express");
-const path = require('path');
+//const path = require('path');
 const bodyParser = require("body-parser");
 require('dotenv').config();
 var cors = require('cors');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 
-const PORT = 3301; //process.env.PORT || 3301
+const PORT = process.env.PORT || 3000
 
 //discord.js set up
 const { Client, GatewayIntentBits, ChannelType, PermissionFlagsBits } = require('discord.js');
@@ -113,10 +113,10 @@ app.use((request, response, next) => {
 });
 
 //general middleware
-app.use(express.static('public'));
+//app.use(express.static('public'));
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(path.resolve(__dirname, '../client/dist')));
+//app.use(express.static(path.resolve(__dirname, 'dist')));
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
@@ -286,6 +286,6 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
 });
 
 //serve the page
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'));
-});
+/*app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+});*/

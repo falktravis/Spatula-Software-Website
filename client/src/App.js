@@ -6,10 +6,6 @@ import Success from './Success.js';
 import Footer from './Footer.js';
 import './styles/main.scss';
 
-//google analytics
-import ReactGA from 'react-ga4';
-ReactGA.initialize('G-7SBLJGWC9F');
-
 function App(){
     return (
         <Router>

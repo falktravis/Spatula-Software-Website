@@ -13,7 +13,7 @@ export default function Dashboard() {
 
         async function getUserData(){
             try{
-                const response = await fetch(`/user-data?userId=${userData.provider_id}`);
+                const response = await fetch(`/server/user-data?userId=${userData.provider_id}`);
                 const data = await response.json();
     
                 if(data != null){
@@ -59,7 +59,7 @@ export default function Dashboard() {
                 priceId: priceId,
             });
 
-            const response = await fetch(`/create-checkout-session?${queryParams}`, {
+            const response = await fetch(`/server/create-checkout-session?${queryParams}`, {
                 method: 'POST',
             });
             const { url } = await response.json();

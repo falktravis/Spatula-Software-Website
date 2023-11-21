@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "server",
   "main": "index.js",
+  "homepage": "http://spatulasoftware.com",
   "scripts": {
-    "start": "node server/index.js",
-    "pm2": "pm2 start server/index.js"
+    "start": "node index.js"
   },
   "author": "Travis Falk",
   "license": "ISC",
@@ -16,7 +16,6 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongodb": "^5.3.0",
-    "react-ga4": "^2.1.0",
     "stripe": "^12.7.0"
   }
 }
