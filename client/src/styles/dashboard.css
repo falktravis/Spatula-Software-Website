@@ -1,0 +1,412 @@
+* {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  transition: 200ms;
+}
+
+.NavBar {
+  width: 95%;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 2.5%;
+  font-family: Plus Jakarta Sans, Roboto;
+}
+.NavBar a {
+  text-decoration: none;
+  color: black;
+}
+.NavBar h1 {
+  font-size: calc(42px + 0.390625vw);
+}
+@media (max-width: 700px) {
+  .NavBar h1 {
+    font-size: calc(32px + 0.390625vw);
+  }
+}
+@media (max-width: 500px) {
+  .NavBar h1 {
+    font-size: calc(22px + 0.390625vw);
+  }
+}
+@media (max-width: 400px) {
+  .NavBar h1 {
+    font-size: calc(18px + 0.390625vw);
+  }
+}
+.NavBar ul {
+  display: flex;
+  justify-content: space-around;
+  width: 30%;
+}
+@media (max-width: 800px) {
+  .NavBar ul {
+    width: 40%;
+  }
+}
+@media (max-width: 400px) {
+  .NavBar ul {
+    width: 45%;
+  }
+}
+.NavBar ul li {
+  list-style-type: none;
+  font-size: calc(14px + 0.390625vw);
+  font-weight: 600;
+  padding: 20px;
+  position: relative;
+}
+@media (max-width: 700px) {
+  .NavBar ul li {
+    font-size: calc(12px + 0.390625vw);
+  }
+}
+@media (max-width: 500px) {
+  .NavBar ul li {
+    font-size: calc(10px + 0.390625vw);
+  }
+}
+@media (max-width: 400px) {
+  .NavBar ul li {
+    font-size: calc(8px + 0.390625vw);
+  }
+}
+.NavBar ul li::after {
+  content: "";
+  background: #8961ff;
+  display: block;
+  height: 0.15vw;
+  width: calc(100% - 40px);
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.2s ease-in-out;
+  position: absolute;
+  border-radius: 5px;
+  margin-top: 2px;
+}
+.NavBar ul li:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+.NavBar ul li:hover {
+  cursor: pointer;
+}
+
+.dashboard {
+  width: 100%;
+  height: 100vh;
+}
+.dashboard .dashboardDisplay {
+  width: 90%;
+  height: 20vh;
+  margin: 0 auto;
+  margin-top: 5vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 20px;
+  position: relative;
+}
+@media (max-width: 900px) {
+  .dashboard .dashboardDisplay {
+    flex-direction: column;
+    justify-content: space-around;
+    height: 35vh;
+    width: 80%;
+  }
+}
+@media (max-width: 800px) {
+  .dashboard .dashboardDisplay {
+    width: 90%;
+  }
+}
+@media (max-width: 650px) {
+  .dashboard .dashboardDisplay {
+    width: 90%;
+  }
+}
+@media (max-width: 550px) {
+  .dashboard .dashboardDisplay {
+    height: 30vh;
+  }
+}
+@media (max-width: 500px) {
+  .dashboard .dashboardDisplay {
+    height: 40vh;
+  }
+}
+@media (max-width: 400px) {
+  .dashboard .dashboardDisplay {
+    height: 35vh;
+  }
+}
+.dashboard .dashboardDisplay .userDisplay {
+  margin-left: 2vw;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+@media (max-width: 900px) {
+  .dashboard .dashboardDisplay .userDisplay {
+    height: 60%;
+  }
+}
+@media (max-width: 500px) {
+  .dashboard .dashboardDisplay .userDisplay {
+    flex-direction: column;
+    justify-content: space-around;
+    height: 70%;
+  }
+}
+.dashboard .dashboardDisplay .userDisplay img {
+  border-radius: 50%;
+  height: 80%;
+}
+@media (max-width: 500px) {
+  .dashboard .dashboardDisplay .userDisplay img {
+    height: 70%;
+  }
+}
+@media (max-width: 400px) {
+  .dashboard .dashboardDisplay .userDisplay img {
+    height: 60%;
+  }
+}
+.dashboard .dashboardDisplay .userDisplay .userInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 2vw;
+  height: 50%;
+}
+@media (max-width: 500px) {
+  .dashboard .dashboardDisplay .userDisplay .userInfo {
+    height: 30%;
+  }
+}
+.dashboard .dashboardDisplay .userDisplay .userInfo .tier span {
+  color: #8961ff;
+}
+.dashboard .dashboardDisplay .userDisplay .userInfo p {
+  font-size: calc(20px + 0.390625vw);
+  font-family: Plus Jakarta Sans, Roboto;
+  font-weight: 600;
+}
+@media (max-width: 900px) {
+  .dashboard .dashboardDisplay .userDisplay .userInfo p {
+    font-size: calc(24px + 0.390625vw);
+  }
+}
+@media (max-width: 700px) {
+  .dashboard .dashboardDisplay .userDisplay .userInfo p {
+    font-size: calc(22px + 0.390625vw);
+  }
+}
+@media (max-width: 600px) {
+  .dashboard .dashboardDisplay .userDisplay .userInfo p {
+    font-size: calc(18px + 0.390625vw);
+  }
+}
+@media (max-width: 550px) {
+  .dashboard .dashboardDisplay .userDisplay .userInfo p {
+    font-size: calc(17px + 0.390625vw);
+  }
+}
+@media (max-width: 400px) {
+  .dashboard .dashboardDisplay .userDisplay .userInfo p {
+    font-size: calc(14px + 0.390625vw);
+  }
+}
+.dashboard .dashboardDisplay .userButtons {
+  overflow: visible;
+}
+.dashboard .dashboardDisplay .userButtons button {
+  margin-right: 2vw;
+  height: 5vh;
+  width: 10vw;
+  border-radius: 10px;
+  border: none;
+  background-color: #ff79fd;
+  color: white;
+  font-size: calc(14px + 0.390625vw);
+  font-family: Montserrat;
+  font-weight: 600;
+  transition: 200ms ease-out;
+  border: 2px solid #ff79fd;
+  position: relative;
+}
+@media (max-width: 1400px) {
+  .dashboard .dashboardDisplay .userButtons button {
+    width: 13vw;
+  }
+}
+@media (max-width: 1000px) {
+  .dashboard .dashboardDisplay .userButtons button {
+    width: 15vw;
+  }
+}
+@media (max-width: 900px) {
+  .dashboard .dashboardDisplay .userButtons button {
+    width: 22vw;
+  }
+}
+@media (max-width: 700px) {
+  .dashboard .dashboardDisplay .userButtons button {
+    width: 26vw;
+  }
+}
+@media (max-width: 600px) {
+  .dashboard .dashboardDisplay .userButtons button {
+    width: 28vw;
+  }
+}
+@media (max-width: 550px) {
+  .dashboard .dashboardDisplay .userButtons button {
+    width: 30vw;
+  }
+}
+@media (max-width: 400px) {
+  .dashboard .dashboardDisplay .userButtons button {
+    width: 34vw;
+  }
+}
+.dashboard .dashboardDisplay .userButtons button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: #ff79fd;
+}
+.dashboard .dashboardDisplay .userButtons .logOut {
+  background-color: white;
+  color: #8961ff;
+  border: 2px solid #8961ff;
+}
+.dashboard .dashboardDisplay .userButtons .logOut:hover {
+  cursor: pointer;
+  background-color: #8961ff;
+  color: white;
+}
+.dashboard .popup {
+  width: 90%;
+  height: 60vh;
+  margin-left: 5%;
+  margin-top: 5vh;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 20px;
+  position: relative;
+}
+.dashboard .popup > button {
+  position: absolute;
+  height: 2vw;
+  width: 2vw;
+  top: 1.5vw;
+  right: 1.5vw;
+  background-color: transparent;
+  border: none;
+  overflow: hidden;
+}
+.dashboard .popup > button:hover {
+  cursor: pointer;
+}
+.dashboard .popup > button img {
+  height: 2vw;
+  width: 2vw;
+}
+.dashboard .popup .pricingCards {
+  width: 80%;
+  height: 100%;
+  margin-left: 10%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.dashboard .popup .pricingCards > div {
+  width: 30%;
+  height: 90%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: 200ms;
+}
+.dashboard .popup .pricingCards > div:hover {
+  transform: scale(103%);
+}
+.dashboard .popup .pricingCards > div .pricingModel {
+  width: 100%;
+  height: 15%;
+  border-radius: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #8961ff;
+}
+.dashboard .popup .pricingCards > div .pricingModel p {
+  font-size: calc(24px + 0.390625vw);
+  font-family: Plus Jakarta Sans, Roboto;
+  font-weight: 600;
+}
+.dashboard .popup .pricingCards > div .modelPrice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 20%;
+}
+.dashboard .popup .pricingCards > div .modelPrice p {
+  font-size: calc(30px + 0.390625vw);
+  font-family: Plus Jakarta Sans, Roboto;
+  font-weight: 600;
+}
+.dashboard .popup .pricingCards > div .modelPrice p span {
+  font-size: calc(20px + 0.390625vw);
+}
+.dashboard .popup .pricingCards > div .modelContent {
+  width: 100%;
+  height: 47%;
+}
+.dashboard .popup .pricingCards > div .modelContent .modelAspect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.5vh;
+  margin-bottom: 1vh;
+}
+.dashboard .popup .pricingCards > div .modelContent .modelAspect img {
+  height: 100%;
+  width: auto;
+  margin-right: 0.5vw;
+}
+.dashboard .popup .pricingCards > div .modelContent .modelAspect p {
+  font-size: calc(12px + 0.390625vw);
+  font-family: Plus Jakarta Sans, Roboto;
+}
+.dashboard .popup .pricingCards > div .modelButton {
+  width: 100%;
+  height: 18%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dashboard .popup .pricingCards > div .modelButton a {
+  height: 6vh;
+  width: 60%;
+  border-radius: 10px;
+  border: none;
+  background-color: #ff79fd;
+  color: black;
+  font-size: calc(16px + 0.390625vw);
+  font-family: Montserrat;
+  font-weight: 600;
+  transition: 200ms ease-out;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dashboard .popup .pricingCards > div .modelButton a:hover {
+  cursor: pointer;
+  box-shadow: #ff79fd 0px 7px 29px 0px;
+}/*# sourceMappingURL=dashboard.css.map */

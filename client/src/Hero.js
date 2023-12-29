@@ -5,11 +5,13 @@ import {createClient} from '@supabase/supabase-js';
 import checkIcon from './imgs/checkIcon.svg';
 import heroImg from './imgs/heroImg.png';
 import notification1 from './imgs/Notification1.png';
-import notification3 from './imgs/Notification3.png';
+import notification2 from './imgs/Notification2.png';
 import notification4 from './imgs/Notification4.png';
 import wavesImg1 from './imgs/waves1.svg';
 import wavesImg2 from './imgs/waves2.svg';
-import commandsImg from './imgs/Commands.png';
+import commandsImg from './imgs/Commands2.png';
+import star from './imgs/star.svg';
+import discordAvatar from './imgs/discordAvatar.png';
 import './styles/hero.scss';
 
 export default function Hero() {
@@ -33,7 +35,7 @@ export default function Hero() {
         return(
             <div className="landingContentDisplay">
                 <div className="notifications">
-                    <img loading="lazy" src={notification3} alt="Screenshot of notification" />
+                    <img loading="lazy" src={notification2} alt="Screenshot of notification" />
                     <div className="textContent">
                         <h4>Get notifications on your phone and computer, when an item is listed.</h4>
                         <p>Notifications will display all the info about the item including, title, price, location, and description</p>
@@ -53,6 +55,25 @@ export default function Hero() {
                         <img loading="lazy" src={notification4} alt="Screenshot of notification with message sent" />
                     </div>
                     <h4>Automatically message Facebook users about their post, or message with just a single click.</h4>
+                </div>
+            </div>
+        );
+    }
+
+    const testimonialCard = (userName, userPic, testimonial) => {
+        return(
+            <div className="testimonial">
+                <div className="userInfo">
+                    <img src={userPic} alt="User Image" />
+                    <p>{userName}</p>
+                </div>
+                <p>{testimonial}</p>
+                <div className="stars">
+                    <img src={star} alt="Gold Star" />
+                    <img src={star} alt="Gold Star" />
+                    <img src={star} alt="Gold Star" />
+                    <img src={star} alt="Gold Star" />
+                    <img src={star} alt="Gold Star" />
                 </div>
             </div>
         );
@@ -137,13 +158,21 @@ export default function Hero() {
             <div className="landingPageContent">
                 <h2>How Does it Work?</h2>
                 <div className="contentButtons">
-                    <button className={tasksContentClass} onClick={() => {setLandingContentDisplay(tasksContent); setTasksContentClass('active'); setNotificationsContentClass(''); setMessagingContentClass('');}}>1. Tasks</button>
-                    <button className={notificationsContentClass} onClick={() => {setLandingContentDisplay(notificationContent); setTasksContentClass(''); setNotificationsContentClass('active'); setMessagingContentClass('');}}>2. Notifications</button>
-                    <button className={messagingContentClass} onClick={() => {setLandingContentDisplay(messagingContent); setTasksContentClass(''); setNotificationsContentClass(''); setMessagingContentClass('active');}}>3. Messaging</button>
+                    <button className={tasksContentClass} onClick={() => {setLandingContentDisplay(tasksContent); setTasksContentClass('active'); setNotificationsContentClass(''); setMessagingContentClass('');}}>Tasks</button>
+                    <button className={notificationsContentClass} onClick={() => {setLandingContentDisplay(notificationContent); setTasksContentClass(''); setNotificationsContentClass('active'); setMessagingContentClass('');}}>Notifications</button>
+                    <button className={messagingContentClass} onClick={() => {setLandingContentDisplay(messagingContent); setTasksContentClass(''); setNotificationsContentClass(''); setMessagingContentClass('active');}}>Messaging</button>
                 </div>
                 {landingContentDisplay}
             </div>
             <img loading="lazy" src={wavesImg2} alt="Wave Image" className='waves2' />
+            <div className="testimonials">
+                {testimonialCard("ColeAutoClark", discordAvatar, "Ever Since I started subscribing to Spatula Software my life was changed. I have more sex, my wife is more attractive, and I make a shit load of money.")}
+                {testimonialCard("Nathan", discordAvatar, "Instantly increased the quantity and quality of my inventory. If you are searching Facebook Marketplace regularly you are at a serious disadvantage.")}
+                {testimonialCard("WobbilyWibbliy", discordAvatar, "This is definitely the cheapest service for Facebook Marketplace notifications and one of the most reliable. If you flip items this is a must.")}
+            </div>
+            <div className="success">
+                
+            </div>
             <div ref={pricing} className='Pricing' id='pricing'>
                 <div className='pricingCards'>
                     <div className='basic'>
