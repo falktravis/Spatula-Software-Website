@@ -654,18 +654,8 @@
 .heroPage .landingPageContent .landingContentDisplay .notifications {
   display: flex;
   justify-content: space-between;
-  width: 50%;
+  width: 70%;
   height: auto;
-}
-@media (max-width: 1200px) {
-  .heroPage .landingPageContent .landingContentDisplay .notifications {
-    width: 60%;
-  }
-}
-@media (max-width: 1000px) {
-  .heroPage .landingPageContent .landingContentDisplay .notifications {
-    width: 70%;
-  }
 }
 @media (max-width: 800px) {
   .heroPage .landingPageContent .landingContentDisplay .notifications {
@@ -804,6 +794,60 @@
   width: 100%;
   height: auto;
   z-index: -1;
+}
+.heroPage .testimonials {
+  height: 40vh;
+  width: 95%;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  overflow: visible;
+}
+.heroPage .testimonials .testimonial {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  width: 30%;
+  height: 80%;
+  border-radius: 20px;
+  padding: 5px;
+  font-family: Plus Jakarta Sans;
+  position: relative;
+}
+.heroPage .testimonials .testimonial .userInfo {
+  display: flex;
+  align-items: center;
+  height: 25%;
+  margin-left: 1.5vw;
+}
+.heroPage .testimonials .testimonial .userInfo img {
+  height: 80%;
+  width: auto;
+  border-radius: 50%;
+}
+.heroPage .testimonials .testimonial .userInfo > p {
+  margin-left: 1vw;
+  font-weight: 600;
+  font-size: calc(15px + 0.390625vw);
+}
+.heroPage .testimonials .testimonial > p {
+  margin: 0 1vw;
+  height: 55%;
+  text-align: center;
+  font-size: calc(12px + 0.390625vw);
+  display: flex;
+  align-items: center;
+}
+.heroPage .testimonials .testimonial .stars {
+  display: flex;
+  justify-content: right;
+  margin-right: 5%;
+  height: 20%;
+}
+.heroPage .testimonials .testimonial .stars img {
+  height: 70%;
+}
+.heroPage .success {
+  height: 40vh;
 }
 .heroPage .Pricing {
   width: 100%;

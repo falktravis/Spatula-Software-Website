@@ -121,7 +121,16 @@ export default function Hero() {
         }
     }
 
-    //                <img src={heroImg} alt="Collage of post notifications" className='notifications' />
+    /*
+            <div className="testimonials">
+                {testimonialCard("ColeAutoClark", discordAvatar, "Ever Since I started subscribing to Spatula Software my life was changed. I have more sex, my wife is more attractive, and I make a shit load of money.")}
+                {testimonialCard("Nathan", discordAvatar, "Instantly increased the quantity and quality of my inventory. If you are searching Facebook Marketplace regularly you are at a serious disadvantage.")}
+                {testimonialCard("WobbilyWibbliy", discordAvatar, "This is definitely the cheapest service for Facebook Marketplace notifications and one of the most reliable. If you flip items this is a must.")}
+            </div>
+            <div className="success">
+                
+            </div>
+    */
     return (
         <div className="heroPage">
             <nav className="NavBar">
@@ -165,14 +174,9 @@ export default function Hero() {
                 {landingContentDisplay}
             </div>
             <img loading="lazy" src={wavesImg2} alt="Wave Image" className='waves2' />
-            <div className="testimonials">
-                {testimonialCard("ColeAutoClark", discordAvatar, "Ever Since I started subscribing to Spatula Software my life was changed. I have more sex, my wife is more attractive, and I make a shit load of money.")}
-                {testimonialCard("Nathan", discordAvatar, "Instantly increased the quantity and quality of my inventory. If you are searching Facebook Marketplace regularly you are at a serious disadvantage.")}
-                {testimonialCard("WobbilyWibbliy", discordAvatar, "This is definitely the cheapest service for Facebook Marketplace notifications and one of the most reliable. If you flip items this is a must.")}
-            </div>
-            <div className="success">
-                
-            </div>
+
+
+
             <div ref={pricing} className='Pricing' id='pricing'>
                 <div className='pricingCards'>
                     <div className='basic'>
@@ -209,7 +213,7 @@ export default function Hero() {
                             <p>Standard</p>
                         </div>
                         <div className="modelPrice">
-                            <p>$45/<span>mo</span></p>
+                            <p>$50/<span>mo</span></p>
                         </div>
                         <div className="modelContent">
                             <div className="modelAspect">
@@ -238,7 +242,7 @@ export default function Hero() {
                             <p>Premium</p>
                         </div>
                         <div className="modelPrice">
-                            <p>$55/<span>mo</span></p>
+                            <p>$65/<span>mo</span></p>
                         </div>
                         <div className="modelContent">
                             <div className="modelAspect">

@@ -1,5 +1,5 @@
 const express = require("express");
-//const path = require('path');
+const path = require('path');
 const bodyParser = require("body-parser");
 require('dotenv').config();
 var cors = require('cors');
@@ -212,9 +212,9 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
 
         if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){//price_1NB6BmK2JasPd9Yue4YiQAhH
           await userDB.insertOne({UserId: discordId, StripeId: customerId, ConcurrentTasks: 2, MessageAccount: null});
-        }else if(priceId === 'price_1NjNiMK2JasPd9Yu8sGt7zWM'){//price_1NBnrWK2JasPd9Yu8FEcTFDx
+        }else if(priceId === 'price_1OluxWK2JasPd9YuOWFrHufI'){//price_1NBnrWK2JasPd9Yu8FEcTFDx
           await userDB.insertOne({UserId: discordId, StripeId: customerId, ConcurrentTasks: 5, MessageAccount: null});
-        }else if(priceId === 'price_1NjNjDK2JasPd9YusTMvOEJ5'){//price_1NBnrrK2JasPd9YubBtmYjFJ
+        }else if(priceId === 'price_1Oluw9K2JasPd9Yuj47fV0iu'){//price_1NBnrrK2JasPd9YubBtmYjFJ
           await userDB.insertOne({UserId: discordId, StripeId: customerId, ConcurrentTasks: 10, MessageAccount: null});
         }
 
@@ -243,9 +243,9 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
 
           if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){
             await member.roles.add('1154922101808042094');
-          }else if(priceId === 'price_1NjNiMK2JasPd9Yu8sGt7zWM'){
+          }else if(priceId === 'price_1OluxWK2JasPd9YuOWFrHufI'){
             await member.roles.add('1154921995943813160');
-          }else if(priceId === 'price_1NjNjDK2JasPd9YusTMvOEJ5'){
+          }else if(priceId === 'price_1Oluw9K2JasPd9Yuj47fV0iu'){
             await member.roles.add('1154921822576459806');
           }
         }
@@ -254,9 +254,9 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), async (re
 
         if(priceId === 'price_1NjNhZK2JasPd9Yuf9mGP9Nm'){//price_1NB6BmK2JasPd9Yue4YiQAhH
           await userDB.updateOne({StripeId: customerId}, {$set: {ConcurrentTasks: 2}});
-        }else if(priceId === 'price_1NjNiMK2JasPd9Yu8sGt7zWM'){//price_1NBnrWK2JasPd9Yu8FEcTFDx
+        }else if(priceId === 'price_1OluxWK2JasPd9YuOWFrHufI'){//price_1NBnrWK2JasPd9Yu8FEcTFDx
           await userDB.updateOne({StripeId: customerId}, {$set: {ConcurrentTasks: 5}});
-        }else if(priceId === 'price_1NjNjDK2JasPd9YusTMvOEJ5'){//price_1NBnrrK2JasPd9YubBtmYjFJ
+        }else if(priceId === 'price_1Oluw9K2JasPd9Yuj47fV0iu'){//price_1NBnrrK2JasPd9YubBtmYjFJ
           await userDB.updateOne({StripeId: customerId}, {$set: {ConcurrentTasks: 10}});
         }
       }else if(type === 'customer.subscription.deleted'){

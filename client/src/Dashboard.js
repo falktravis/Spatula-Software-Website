@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {createClient} from '@supabase/supabase-js';
 import checkIcon from './imgs/checkIcon.svg';
 import closeIcon from './imgs/close.svg';
 import './styles/dashboard.scss';
@@ -8,29 +9,47 @@ export default function Dashboard() {
     const [userSubscription, setUserSubscription] = useState('None');
     const [isPopup, setIsPopup] = useState(false);
 
-    useEffect(() => {
-        setIsPopup(false);
+    //supabase if they try to access the dash directly
+    const supabase = createClient(
+        process.env.SUPABASEURL,
+        process.env.SUPABASEPUBLICANONKEY
+    );
 
-        async function getUserData(){
-            try{
-                const response = await fetch(`/server/user-data?userId=${userData.provider_id}`);
-                const data = await response.json();
-    
-                if(data != null){
-                    if(data.ConcurrentTasks == 2){
-                        setUserSubscription("Basic");
-                    }else if(data.ConcurrentTasks == 5){
-                        setUserSubscription("Standard");
-                    }else if(data.ConcurrentTasks == 10){
-                        setUserSubscription("Premium");
+    useEffect(() => {
+        if(localStorage.getItem('userData') == null){
+            (async() => {
+                console.log("trying to log back in")
+                await supabase.auth.signInWithOAuth({
+                    provider: "discord", 
+                    options: { 
+                      redirectTo: 'https://spatulasoftware.com/?login' 
+                    } 
+                })
+            })();
+        }else{
+            setIsPopup(false);
+
+            async function getUserData(){
+                try{
+                    const response = await fetch(`/server/user-data?userId=${userData.provider_id}`);
+                    const data = await response.json();
+        
+                    if(data != null){
+                        if(data.ConcurrentTasks == 2){
+                            setUserSubscription("Basic");
+                        }else if(data.ConcurrentTasks == 5){
+                            setUserSubscription("Standard");
+                        }else if(data.ConcurrentTasks == 10){
+                            setUserSubscription("Premium");
+                        }
                     }
+                } catch (error) {
+                    // Handle error
+                    console.error(error);
                 }
-            } catch (error) {
-                // Handle error
-                console.error(error);
             }
+            getUserData();
         }
-        getUserData();
     }, [])
 
     const actionButton = () => {
@@ -137,7 +156,7 @@ export default function Dashboard() {
                                 <p>Standard</p>
                             </div>
                             <div className="modelPrice">
-                                <p>$45/<span>mo</span></p>
+                                <p>$50/<span>mo</span></p>
                             </div>
                             <div className="modelContent">
                                 <div className="modelAspect">
@@ -158,7 +177,7 @@ export default function Dashboard() {
                                 </div>
                             </div>
                             <div className="modelButton">
-                                <a onClick={() => createCheckoutSession('price_1NjNiMK2JasPd9Yu8sGt7zWM')}>Subscribe</a>
+                                <a onClick={() => createCheckoutSession('price_1OluxWK2JasPd9YuOWFrHufI')}>Subscribe</a>
                             </div>
                         </div>
                         <div className='premium'>
@@ -166,7 +185,7 @@ export default function Dashboard() {
                                 <p>Premium</p>
                             </div>
                             <div className="modelPrice">
-                                <p>$55/<span>mo</span></p>
+                                <p>$65/<span>mo</span></p>
                             </div>
                             <div className="modelContent">
                                 <div className="modelAspect">
@@ -187,7 +206,7 @@ export default function Dashboard() {
                                 </div>
                             </div>
                             <div className="modelButton">
-                                <a onClick={() => createCheckoutSession('price_1NjNjDK2JasPd9YusTMvOEJ5')}>Subscribe</a>
+                                <a onClick={() => createCheckoutSession('price_1Oluw9K2JasPd9Yuj47fV0iu')}>Subscribe</a>
                             </div>
                         </div>
                     </div>
